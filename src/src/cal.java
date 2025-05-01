@@ -25,24 +25,18 @@ public class cal
             Lecture_Day[i] = sc.nextLine();
         }
 
-        int[] schedule = new int[count];
+        int[] Lecture_Time = new int[count];
         for (int i = 0; i < count; i++)
         {
             System.out.print((i + 1) + "강의 시간을 입력하세요. Ex: 10, 13");
-            schedule[i] = sc.nextInt();
+            Lecture_Time[i] = sc.nextInt();
             sc.nextLine();
         }
 
-        System.out.println("강의 목록");
-        for (String str : Lecture_Name)
-        {
-            System.out.println(str);
-        }
-
         System.out.println("강의 요일");
-        for (String str : Lecture_Day)
+        for (int i = 0; i < count; i++)
         {
-            System.out.println(str);
+            System.out.println(Lecture_Name[i] + " " + Lecture_Day[i] + "요일 " + Lecture_Time[i] + "시");
         }
     }
 }
