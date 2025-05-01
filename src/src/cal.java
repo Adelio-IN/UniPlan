@@ -10,14 +10,14 @@ public class cal
         int count = sc.nextInt();
         sc.nextLine();
 
-        String[] Lecture_Name = new String[count]; // 변수명 변경 요망
+        String[] Lecture_Name = new String[count];
 
         for (int i = 0; i < count; i++) {
             System.out.print((i + 1) + "번째 강의명을 입력하세요: ");
             Lecture_Name[i] = sc.nextLine();
         }
 
-        String[] Lecture_Day = new String[count]; // 변수명 변경 요망
+        String[] Lecture_Day = new String[count];
 
         for (int i = 0; i < count; i++)
         {
