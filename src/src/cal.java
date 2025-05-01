@@ -25,11 +25,11 @@ public class cal
             Lecture_Day[i] = sc.nextLine();
         }
 
-        int schedule = sc.nextInt();
+        int[] schedule = new int[count];
         for (int i = 0; i < count; i++)
         {
             System.out.print((i + 1) + "강의 시간을 입력하세요. Ex: 10, 13");
-            schedule = sc.nextInt();
+            schedule[i] = sc.nextInt();
             sc.nextLine();
         }
 
