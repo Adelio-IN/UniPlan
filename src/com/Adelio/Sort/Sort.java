@@ -1,4 +1,4 @@
-package com.Adelio;
+package com.Adelio.Sort;
 
 public class Sort {
     String name;
