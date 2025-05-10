@@ -1,9 +1,9 @@
 package com.Adelio.Sort;
 
 public class Sort {
-    String name;
-    String day;
-    int time;
+    public String name;
+    public String day;
+    public int time;
 
     public Sort(String name, String day, int time) {
         this.name = name;
