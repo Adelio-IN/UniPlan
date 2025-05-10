@@ -1,5 +1,10 @@
 package com.Adelio;
 
+import com.Adelio.Sort.LectureSort;
+import com.Adelio.Sort.Sort;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main
@@ -35,9 +40,17 @@ public class Main
             sc.nextLine();
         }
 
-        System.out.println("강의 요일");
+        List<Sort> Lectures = new ArrayList<>();
         for (int i = 0; i < count; i++)
         {
+            Lectures.add(new Sort(Lecture_Name[i], Lecture_Day[i], Lecture_Time[i]));
+        }
+        LectureSort.sort_Day_Time(Lectures);
+
+        System.out.println("강의 목록");
+        for (Sort lecture : Lectures)
+        {
+            int i = count; i++;
             System.out.println(Lecture_Name[i] + " " + Lecture_Day[i] + "요일 " + Lecture_Time[i] + "시");
         }
     }
