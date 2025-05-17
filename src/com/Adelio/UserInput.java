@@ -1,5 +1,9 @@
 package com.Adelio;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
 abstract class SelectUser {
     private String name;
     private int id;
@@ -36,16 +40,20 @@ class Student extends SelectUser {
 
 class Professor extends SelectUser
 {
-    private String department;
-
     public Professor(String name, int id, String department)
     {
         super(name, id);
-        this.department = department;
     }
     @Override
     public void display()
     {
-        System.out.println("이름: " + getName() + ", ID: " + getId() + ", 학과: " + department);
+        System.out.println("이름: " + getName() + ", ID: " + getId());
+    }
+}
+public class UserInput
+{
+    public static void main(String[] args)
+    {
+        
     }
 }
