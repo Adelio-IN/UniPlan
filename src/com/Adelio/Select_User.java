@@ -28,16 +28,24 @@ class Student extends SelectUser {
         this.major = major;
     }
 
-    public String getMajor() {
-        return major;
-    }
-
-    public void setMajor(String major) {
-        this.major = major;
-    }
-
     @Override
     public void display() {
         System.out.println("이름: " + getName() + ", ID: " + getId() + ", 전공: " + major);
+    }
+}
+
+class Professor extends SelectUser
+{
+    private String department;
+
+    public Professor(String name, int id, String department)
+    {
+        super(name, id);
+        this.department = department;
+    }
+    @Override
+    public void display()
+    {
+        System.out.println("이름: " + getName() + ", ID: " + getId() + ", 학과: " + department);
     }
 }
