@@ -87,5 +87,22 @@ public class UserInput
                 System.out.println("잘못된 입력입니다.");
             }
         }
+        System.out.println("====사용자 목록====");
+        System.out.println("\n[ 교수 목록 ]");
+        System.out.printf("%-10s %-5s %-15s%n", "이름", "ID", "학과");
+        for (SelectUser user : userList) {
+            if (user instanceof Professor) {
+                user.display();
+            }
+        }
+
+        System.out.println("\n[ 학생 목록 ]");
+        System.out.printf("%-10s %-5s %-15s%n", "이름", "ID", "전공");
+        for (SelectUser user : userList) {
+            if (user instanceof Student) {
+                user.display();
+            }
+        }
+
     }
 }
