@@ -89,7 +89,7 @@ public class UserInput
         }
         System.out.println("====사용자 목록====");
         System.out.println("\n[ 교수 목록 ]");
-        System.out.printf("%-10s %-5s %-15s%n", "이름", "ID", "학과");
+        System.out.printf("%-10s %-5s %-15s%n", "이름", "ID", "");
         for (SelectUser user : userList) {
             if (user instanceof Professor) {
                 user.display();
