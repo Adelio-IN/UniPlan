@@ -1,4 +1,6 @@
 package com.Adelio;
 
-public class Schedule {
+public class Schedule
+{
+
 }
