@@ -1,5 +1,3 @@
-package com.Adelio.Sort;
-
 public class Sort {
     public String name;
     public String day;

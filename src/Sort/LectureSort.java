@@ -1,5 +1,3 @@
-package com.Adelio.Sort;
-
 import java.util.*;
 
 public class LectureSort

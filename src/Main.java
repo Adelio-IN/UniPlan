@@ -1,8 +1,3 @@
-package com.Adelio;
-
-import com.Adelio.Sort.LectureSort;
-import com.Adelio.Sort.Sort;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
