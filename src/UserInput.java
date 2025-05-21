@@ -88,16 +88,20 @@ public class UserInput
         System.out.println("====사용자 목록====");
         System.out.println("\n[ 교수 목록 ]");
         System.out.printf("%-10s %-5s %-15s%n", "이름", "ID", ""); // %-10s %-5s %-15s%n은 출력을 정렬하는 데 사용.(포맷 문자열) [%-10s은 문자열(s), 최소 10칸], [%-5s는 문자열(s) 최소 5칸], [%-15s은 문자열(s), 최소 15칸]
-        for (SelectUser user : userList) {
-            if (user instanceof Professor) {
+        for (SelectUser user : userList)
+        {
+            if (user instanceof Professor)
+            {
                 user.display();
             }
         }
 
         System.out.println("\n[ 학생 목록 ]");
         System.out.printf("%-10s %-5s %-15s%n", "이름", "ID", "전공");
-        for (SelectUser user : userList) {
-            if (user instanceof Student) {
+        for (SelectUser user : userList)
+        {
+            if (user instanceof Student)
+            {
                 user.display();
             }
         }
