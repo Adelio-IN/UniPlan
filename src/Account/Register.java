@@ -25,8 +25,26 @@ public class Register
     {
         return input.matches("^[a-zA-Z0-9]*$");
     }
-    public static String getValidInput(Scanner sc,String input)
+    public static String getValidInput(Scanner sc, String fieldName)
     {
+        String input;
+        while (true)
+        {
+            System.out.printf("%s 영문(대소문자)/숫자만 입력하세요.\n 'exit'를 입력하면 종료됩니다", fieldName);
+            input = sc.nextLine().strip();
+            if (input.equalsIgnoreCase("exit"))
+            {
+                return "exit";
+            }
+            if (isValid(input))
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("Warning! 영문 대소문자와 숫자만 입력할 수 있습니다. 다시 입력하세요.");
+            }
+        }
         return input;
     }
     public static void main(String[] args)
