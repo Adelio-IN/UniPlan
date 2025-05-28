@@ -47,6 +47,10 @@ public class Register
         }
         return input;
     }
+    public class Overlap
+    {
+        
+    }
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
