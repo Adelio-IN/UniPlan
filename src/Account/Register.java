@@ -52,22 +52,31 @@ public class Register
         Scanner sc = new Scanner(System.in);
         List<User> UserList = new ArrayList<>();
 
-        System.out.println("회원가입을 시작합니다. ID와 비밀번호를 입력하세요. 중단하려면, exit를 입력하세요.");
+        System.out.println("회원가입을 시작합니다. ID와 비밀번호를 입력하세요. 중단하려면, exit를 입력하세요.\n");
         System.out.println("ID와 비밀번호는 영문 대소문자, 숫자만 입력 가능합니다.");
-        System.out.println("\n등록할 아이디를 입력하세요.: ");
-        String id = sc.nextLine();
-        if (id.equals("exit"))
-        {
-            System.out.println("회원가입이 종료되었습니다.");
-            return;
+        while(true){
+            System.out.println("\n등록할 아이디를 입력하세요.: ");
+            String id = getValidInput(sc, "ID");
+            if (id.equalsIgnoreCase("exit"))
+            {
+                System.out.println("회원가입이 종료되었습니다.");
+                break;
+            }
+            System.out.println("\n등록할 비밀번호를 입력하세요.: ");
+            String password = getValidInput(sc, "비밀번호");
+            if (password.equalsIgnoreCase("exit"))
+            {
+                System.out.println("회원가입이 종료되었습니다.");
+                break;
+            }
+            System.out.println("\n사용자 이름을 입력하세요.: ");
+            String name = getValidInput(sc, "이름");
+            if(name.equalsIgnoreCase("exit"))
+            {
+                System.out.println("회원가입이 종료되었습니다.");
+                break;
+            }
+            UserList.add(new User(id, password, password));
         }
-        System.out.println("\n등록할 비밀번호를 입력하세요.: ");
-        String password = sc.nextLine();
-        if (password.equals("exit"))
-        {
-            System.out.println("회원가입이 종료되었습니다.");
-            return;
-        }
-        System.out.println("\n등록할 이름을 입력하세요.: ");
     }
 }
