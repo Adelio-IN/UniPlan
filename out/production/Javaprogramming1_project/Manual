@@ -1,0 +1,5 @@
+equals는 대소문자를 구분하기 때문에 정확하게 "exit"를 입력했을 때만, true로 받아들임.
+하지만, equalsIgnoreCase는 대소문자를 구분하지 않기 때문에 Exit, EXIT, ExIT 등도 true로 받아들임.
+사용자가 다양한 형태로 입력해도 작동할 수(종료될 수 있도록) equalsIngoreCase를 사용함.
+
+굳이 왜
