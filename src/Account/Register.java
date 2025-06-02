@@ -47,10 +47,12 @@ public class Register
         }
         return input;
     }
+
     public class Overlap
     {
 
     }
+
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
@@ -58,7 +60,8 @@ public class Register
 
         System.out.println("회원가입을 시작합니다. ID와 비밀번호를 입력하세요. 중단하려면, exit를 입력하세요.\n");
         System.out.println("ID와 비밀번호는 영문 대소문자, 숫자만 입력 가능합니다.");
-        while(true){
+        while(true)
+        {
             System.out.println("\n등록할 아이디를 입력하세요.: ");
             String id = getValidInput(sc, "ID");
             if (id.equalsIgnoreCase("exit"))
