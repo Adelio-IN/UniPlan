@@ -9,7 +9,8 @@ public class Main
     private static LectureSort LectureSort = new LectureSort();
     private static Register r = new Register();
     private static UserInput u = new UserInput();
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         System.out.println("UniPlan 로딩중...");
         Scanner sc = new Scanner(System.in);
         System.out.println("UniPlan 로딩 완료!");

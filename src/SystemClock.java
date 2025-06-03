@@ -18,7 +18,7 @@ public class SystemClock
     {
         return LocalDateTime.now(clock);
     }
-    public static  String getFormattedTime()
+    public static String getFormattedTime()
     {
         return now().format(formatter);
     }

@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.time.LocalDateTime;
 
 abstract class SelectUser {
     private String name;
@@ -17,10 +18,10 @@ abstract class SelectUser {
         return name;
     }
 
-    public int getId() {
+    public int getId()
+    {
         return id;
     }
-
     public abstract void display();
 }
 
@@ -110,6 +111,5 @@ public class UserInput
                 user.display();
             }
         }
-
     }
 }
