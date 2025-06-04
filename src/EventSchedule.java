@@ -41,17 +41,14 @@ public class EventSchedule
         return lectureTime;
     }
 
-    public List<EventSchedule> getAssignments()
+    public void setNotification(boolean notificationSent)
     {
-        return
-    }
-
-    public void setNotification(boolean notificationSent) {
         this.notification = notificationSent;
     }
     @Override
     public String toString()
     {
-        return "EventSchedule [eventName=" + eventName + ", eventDateTime=" + eventDateTime + ", description=" + description + "'}";
+        return "EventSchedule [eventName=" + eventName + ", eventDateTime=" + eventDateTime.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+                + ", description=" + description + "']";
     }
 }

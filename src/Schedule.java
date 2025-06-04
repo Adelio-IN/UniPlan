@@ -8,6 +8,14 @@ public class Schedule
 
     static ArrayList<String>[] lectureList = new ArrayList[maxLectureList];
 
+    static
+    {
+        for (int i = 0; i < maxLectureList; i++)
+        {
+            lecture[i] = new ArrayList<>().toArray(new String[0]);
+        }
+        System.out.println("Schedule Lecture List 초기화 완료" + maxLectureList);
+    }
     public static void main(String[] args)
     {
         for (int i = 0; i < maxLectureList; i++)
@@ -23,23 +31,46 @@ public class Schedule
     }
     public static void setLectureList(int index, String name, String day, String time)
     {
-        lecture[index][0] = name;
-        lecture[index][1] = day;
-        lecture[index][2] = time;
+        if (index >= 0 || index > maxLectureList)
+        {
+            lecture[index][0] = name;
+            lecture[index][1] = day;
+            lecture[index][2] = time;
+        }
     }
     public static void addLecture(int index, String lectureName)
     {
-        lectureList[index].add(lectureName);
+        if(index >= 0 && index < maxLectureList)
+        {
+            lectureList[index].add(lectureName);
+        }
+        else
+        {
+            System.out.println("유효하지 않습니다.");
+        }
     }
     public static int getLectureCount(int index)
     {
-        return lectureList[index].size();
+        if (index >= 0 && index < maxLectureList)
+        {
+            return lectureList[index].size();
+        }
+        return 0;
     }
     public static void printAllLectures()
     {
+        boolean listFound = false;
         for (int i = 0; i < maxLectureList; i++)
         {
-            printLectureInfo(i);
+            if (lectureList[i] != null && !lectureList[i].isEmpty())
+            {
+                printLectureInfo(i);
+                listFound = true;
+            }
+            if (!listFound)
+            {
+                System.out.println("등록된 강의가 존재하지 않습니다.");
+            }
         }
     }
     public static void printLectureInfo(int index)
