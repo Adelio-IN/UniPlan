@@ -7,13 +7,15 @@ public class EventSchedule
     private LocalDateTime eventDateTime;
     private String description;
     private boolean notification;
+    private String lectureTime;
 
-    public EventSchedule(String eventName, LocalDateTime eventDateTime, String description, boolean notification)
+    public EventSchedule(String eventName, LocalDateTime eventDateTime, String description, boolean notification, String lectureTime)
     {
         this.eventName = eventName;
         this.eventDateTime = eventDateTime;
         this.description = description;
         this.notification = false;
+        this.lectureTime = lectureTime;
     }
 
     public String getEventName()
@@ -24,12 +26,24 @@ public class EventSchedule
     {
         return eventDateTime;
     }
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public boolean isNotification() {
+    public boolean isNotification()
+    {
         return notification;
+    }
+
+    public String getLectureTime()
+    {
+        return lectureTime;
+    }
+
+    public List<EventSchedule> getAssignments()
+    {
+        return
     }
 
     public void setNotification(boolean notificationSent) {

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -49,18 +50,18 @@ public class Register
         if (input == null || input.isEmpty()) {
             return false;
         }
-        return input.matches("^[a-zA-Z0-9]*$");
+        return input.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
     }
 
     public static boolean isIdTaken(List<User> userList, String id) {
         {
             for (User user : userList) {
-                if (user.getID.equals(id)) {
+                if (user.getID().equals(id)) {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
 
     public static String getValidAlphaNumericInput(Scanner sc, String fieldName)
@@ -119,31 +120,24 @@ public class Register
 
         System.out.println("✨ 회원가입을 시작합니다. (중단하려면 언제든지 'exit'를 입력하세요)\n");
 
-        while (true)
-        {
+        while (true) {
             String id = getValidIdInput(sc, userList);
-            if (id.equalsIgnoreCase("exit"))
-            {
+            if (id.equalsIgnoreCase("exit")) {
                 System.out.println("회원가입을 종료합니다.");
                 break;
             }
 
             String password = getValidAlphaNumericInput(sc, "비밀번호");
-            if (password.equalsIgnoreCase("exit"))
-            {
+            if (password.equalsIgnoreCase("exit")) {
                 System.out.println("회원가입을 종료합니다.");
                 break;
             }
 
             String name = getValidAlphaNumericInput(sc, "사용자 이름");
-            if (name.equalsIgnoreCase("exit"))
-            {
+            if (name.equalsIgnoreCase("exit")) {
                 System.out.println("회원가입을 종료합니다.");
                 break;
             }
-
-            User newUser = new User(name, id, password); // new Register.User(...)와 동일
-            userList.add(newUser);
             System.out.println("✅ [" + name + " (" + id + ")]님의 회원가입이 완료되었습니다!");
             System.out.println("------------------------------------");
         }

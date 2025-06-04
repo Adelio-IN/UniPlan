@@ -8,5 +8,4 @@ public class LectureSort
     {
         lecture.sort(Comparator.comparingInt((Sort s) -> Day.indexOf(s.day)).thenComparingInt(s -> s.time));
     }
-
 }
