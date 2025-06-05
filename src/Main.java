@@ -64,5 +64,4 @@ public class Main
         schedule.setLectureList(1, "자바프로그래밍", "월", "11:00");
         schedule.setLectureList(2, "자바프로그래밍", "월", "12:00");
     }
-
 }

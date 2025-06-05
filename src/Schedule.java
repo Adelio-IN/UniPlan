@@ -31,7 +31,7 @@ public class Schedule
     }
     public static void setLectureList(int index, String name, String day, String time)
     {
-        if (index >= 0 || index > maxLectureList)
+        if (index >= 0 || index < maxLectureList)
         {
             lecture[index][0] = name;
             lecture[index][1] = day;
@@ -70,6 +70,17 @@ public class Schedule
         }
         return 0;
     }
+
+    public static void loadSampleData()
+    {
+        System.out.println("\n샘플 데이터를 로드합니다...");
+        setLectureList(0, "자바 프로그래밍", "월", "10:00");
+        setLectureList(1, "웹 프로그래밍 기초", "화", "13:30");
+        setLectureList(3, "데이터베이스", "목", "15:00");
+        setLectureList(9, "컴퓨터 구조", "금", "09:00");
+        System.out.println("샘플 데이터 로드 완료.");
+    }
+
     public static void printAllLectures()
     {
         boolean listFound = false;
