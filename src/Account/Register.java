@@ -120,35 +120,29 @@ public class Register
         }
         return id;
     }
-
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        List<User> userList = new ArrayList<>();
-
+    public static void processRegister(Scanner sc)
+    {
         System.out.println("✨ 회원가입을 시작합니다. (중단하려면 언제든지 'exit'를 입력하세요)\n");
 
-        while (true) {
-            String id = getValidIdInput(sc, userList);
-            if (id.equalsIgnoreCase("exit")) {
-                System.out.println("회원가입을 종료합니다.");
-                break;
-            }
-
-            String password = getValidAlphaNumericInput(sc, "비밀번호");
-            if (password.equalsIgnoreCase("exit")) {
-                System.out.println("회원가입을 종료합니다.");
-                break;
-            }
-
-            String name = getValidAlphaNumericInput(sc, "사용자 이름");
-            if (name.equalsIgnoreCase("exit")) {
-                System.out.println("회원가입을 종료합니다.");
-                break;
-            }
-            System.out.println("✅ [" + name + " (" + id + ")]님의 회원가입이 완료되었습니다!");
-            System.out.println("------------------------------------");
+        String id = getValidIdInput(sc, userList);
+        if (id.equalsIgnoreCase("exit"))
+        {
+            System.out.println("회원가입을 종료합니다");
+            return;
         }
-        System.out.println("회원가입 프로그램을 종료합니다.");
-        sc.close();
+
+        String password = getValidIdInput(sc, userList);
+        if (password.equalsIgnoreCase("exit"))
+        {
+            System.out.println("회원가입을 종료합니다");
+        }
+
+        String name = getValidAlphaNumericInput(sc, "사용자 이름");
+        if (name.equalsIgnoreCase("exit")) {
+            System.out.println("회원가입을 종료합니다.");
+            return;
+        }
+        System.out.println("✅ [" + name + " (" + id + ")]님의 회원가입이 완료되었습니다!");
+        System.out.println("------------------------------------");
     }
 }

@@ -4,52 +4,81 @@ import java.util.Scanner;
 
 public class Main
 {
+    private static Register.User currentUser = null;
+    private static final Login login = new Login();
     private static SystemClock clock = new SystemClock();
     private static Schedule schedule = new Schedule();
     private static LectureSort LectureSort = new LectureSort();
     private static Register r = new Register();
     private static UserInput u = new UserInput();
+    private static Scanner sc = new Scanner(System.in);
+
     public static void main(String[] args)
     {
         System.out.println("UniPlan 로딩중...");
-        Scanner sc = new Scanner(System.in);
-        System.out.println("UniPlan 로딩 완료!");
+        System.out.println("\nUniPlan 로딩 완료!");
 
-        System.out.print("강의 수를 입력하세요: ");
-        int count = sc.nextInt();
-        sc.nextLine();  // 개행 문자 제거
-
-        String[] Lecture_Name = new String[count];
-        for (int i = 0; i < count; i++) {
-            System.out.print((i + 1) + "번째 강의명을 입력하세요: ");
-            Lecture_Name[i] = sc.nextLine();
-        }
-
-        String[] Lecture_Day = new String[count];
-        for (int i = 0; i < count; i++) {
-            System.out.print((i + 1) + "강의 요일을 입력하세요. Ex: 월, 화: ");
-            Lecture_Day[i] = sc.nextLine();
-        }
-
-        int[] Lecture_Time = new int[count];
-        for (int i = 0; i < count; i++) {
-            System.out.print((i + 1) + "강의 시간을 입력하세요. Ex: 10, 13: ");
-            Lecture_Time[i] = sc.nextInt();
-            sc.nextLine();
-        }
-
-        List<Sort> Lectures = new ArrayList<>();
-        for (int i = 0; i < count; i++) {
-            Lectures.add(new Sort(Lecture_Name[i], Lecture_Day[i], Lecture_Time[i]));
-        }
-
-        LectureSort.sort_Day_Time(Lectures);
-
-        System.out.println("\n강의 목록");
-        for (Sort lecture : Lectures) {
-            System.out.println(lecture.name + " " + lecture.day + "요일 " + lecture.time + "시");
+        while(true)
+        {
+            if(currentUser == null)
+            {
+                showLoginMenu();
+            }
+            else
+            {
+                showLoginMenu();
+            }
         }
     }
+    private static void showLoginMenu()
+    {
+        System.out.println("\n-----UniPlan Main-----");
+        System.out.println("1. 로그인");
+        System.out.println("2. 회원가입");
+        System.out.println("3. exit");
+
+        String choice = sc.nextLine();
+        switch(choice)
+        {
+            case "1":
+                handleLogin();
+                break;
+            case "2":
+                Register.processRegister(sc);
+                break;
+            case "3":
+                System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                sc.close();
+                System.exit(0);
+            default:
+                System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+        }
+    }
+
+    private static void handleLogin()
+    {
+        currentUser = login.tryLogin(sc);
+    }
+    private static void showSelectMenu()
+    {
+        System.out.println("-----UniPlan 메뉴-----");
+        System.out.println("1. 시간표 관리");
+        System.out.println("2. 알람");
+        System.out.println("3. 이벤트/과제 관리");
+
+        String choice = sc.nextLine();
+        switch (choice)
+        {
+            case "1":
+                handleLogin();
+                break;
+            case "2":
+                Register.processRegister(sc);
+                break;
+
+        }
+    }
+
     private static void loadSampleData()
     {
         System.out.println("---Sample data loading...---");
