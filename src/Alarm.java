@@ -74,10 +74,17 @@ public class Alarm
                     }
                 }
             };
+            schduleTimer.schedule(task, 0, 1000); // task를 즉시 시작하여 1초마다 반복 실행
         }
         private static void ringAlarm(AlarmData alarm)
         {
-            String lectureInfo = Schedule.getLectureCount()
+            String lectureInfo = Schedule.getLectureInfo(alarm.getScheduleIndex());
+
+            System.out.println("-----------\uD83D\uDEA8---------");
+            System.out.println("\n강의 명:" + lectureInfo);
+            System.out.println("\n메시지: " + alarm.getMessage());
+            System.out.println("\n마감 시간: " + alarm.getAlarmTime());
+            System.out.println("--------------------------------");
         }
     }
 }

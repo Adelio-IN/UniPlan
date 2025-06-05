@@ -36,7 +36,20 @@ public class Schedule
             lecture[index][0] = name;
             lecture[index][1] = day;
             lecture[index][2] = time;
+            System.out.printf("일정 설정 완료.", index, name, day, time);
         }
+        else
+        {
+            System.out.println("잘못된 인덱스입니다.");
+        }
+    }
+    public static String getLectureInfo(int index)
+    {
+        if (index >= 0)
+        {
+            return lecture[index][0] + " " + lecture[index][1] + " " + lecture[index][2];
+        }
+        return "등록되지 않은 강의입니다";
     }
     public static void addLecture(int index, String lectureName)
     {

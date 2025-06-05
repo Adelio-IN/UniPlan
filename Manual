@@ -8,3 +8,12 @@ SystemClock 클래스에서 setFixedTime 메소드
 1. clock = Clock.fixed(fixedDateTime.atZone(Zone_ID).toInstant(), Zone_ID);
 -> 고정된 시간 Clock 객체 생성
 // 입력된 LocalDateTime을 KST 기준으로 Instant로 변환 -> Clock 설정
+
+Register 클래스에서 userList를 public static으로 선언하여 Login 클래스 내에서 사용함.
+
+@Override는 상속 관계가 있는 모든 곳에서 사용 가능.
+-> TimerTask를 상속받아 run() 메소드 재정의. -> @Override 사용
+
+Alarm 클래스에서 startScheduler 메소드가 호출되면, Timer가 현재 시간 확인 -> 조건에 맞는 알람을 보냄.(즉시 시작 -> 1초마다 반복)
+
+
