@@ -11,7 +11,7 @@ public class Login
         System.out.print("\n비밀번호를 입력하세요.");
         String password = sc.nextLine();
 
-        for (Register.User user : Register.userList)
+        for (Register.User user : Register.userList) // Register 클래스에서 정의한 userList 사용
         {
             if (user.getID().equals(id) && user.getPassword().equals(password))
             {

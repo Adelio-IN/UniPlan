@@ -148,7 +148,6 @@ public class Register
             System.out.println("✅ [" + name + " (" + id + ")]님의 회원가입이 완료되었습니다!");
             System.out.println("------------------------------------");
         }
-        System.out.println("-----------------------------");
         System.out.println("회원가입 프로그램을 종료합니다.");
         sc.close();
     }
