@@ -2,19 +2,24 @@ import java.util.Scanner;
 
 public class Login
 {
-    private Scanner sc;
-
-    public Login()
+    public Register.User tryLogin(Scanner sc)
     {
-        this.sc = new Scanner(System.in);
-    }
-    public Login tryLogin()
-    {
-        System.out.println("---로그인을 시작합니다---");
-        System.out.print("아이디를 입력하세요.");
-        String id = this.sc.nextLine();
+        System.out.println("--- 로그인 ---");
+        System.out.print("\n아이디를 입력하세요.");
+        String id = sc.nextLine();
 
-        System.out.print("비밀번호를 입력하세요: ");
-        String password = sc.nextLine().trim();
+        System.out.print("\n비밀번호를 입력하세요.");
+        String password = sc.nextLine();
+
+        for (Register.User user : Register.userList)
+        {
+            if (user.getID().equals(id) && user.getPassword().equals(password))
+            {
+                System.out.println(user.getName() + "님 로그인에 성공하셨습니다.");
+                return user;
+            }
+        }
+        System.out.println("아이디 혹은 비밀번호가 일치하지 않습니다. 다시 시도하세요");
+        return null;
     }
 }

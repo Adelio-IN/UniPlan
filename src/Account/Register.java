@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class Register
 {
+    public static List<User> userList = new ArrayList<>();
+
     static class User
     {
         private String name;
@@ -35,6 +37,11 @@ public class Register
         public void display()
         {
             System.out.println("이름: " + name + ", ID: " + id);
+        }
+
+        public Object getID()
+        {
+            return id;
         }
     }
 
@@ -71,7 +78,7 @@ public class Register
         {
             System.out.printf("%s 를 입력하세요. " +
                     "\n ! 영문 대/소문자, 숫자만 입력가능합니다. 중단하려면, 'exit'를 입력하세요", fieldName);
-            input = sc.nextLine().trim();
+            input = sc.nextLine();
             if (input.equals("exit")) {
                 break;
             }
@@ -93,7 +100,7 @@ public class Register
         while (true)
         {
             System.out.print("등록할 아이디를 입력하세요 (영문+숫자 조합, 8자 이상). 'exit' 입력 시 종료: ");
-            id = sc.nextLine().trim();
+            id = sc.nextLine();
             if (id.equalsIgnoreCase("exit")) {
                 return "exit";
             }
