@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Schedule
 {
@@ -83,19 +84,37 @@ public class Schedule
 
     public static void printAllLectures()
     {
-        boolean listFound = false;
+        List<Sort> sortLectureList = new ArrayList<>();
         for (int i = 0; i < maxLectureList; i++)
         {
-            if (lectureList[i] != null && !lectureList[i].isEmpty())
+            String name = lecture[i][0];
+            try
             {
-                printLectureInfo(i);
-                listFound = true;
+                String day = lecture[i][1];
+                int time = Integer.parseInt(lecture[i][2]);
+                sortLectureList.add(new Sort(name, day, time));
+            } catch (NumberFormatException |
+                     NullPointerException e) // 올바른 숫자 양식이 아닐 경우, null 값을 가지는 참조 변수에 접근 -> 메서드 호출 or 필드 사용을 동시에 함
+            {
+                System.out.println(name + " 강의의 시간 정보가 올바르지 않아 목록에서 제외됩니다.");
             }
-            if (!listFound)
-            {
+            if (sortLectureList.isEmpty()) {
+                System.out.println("\n--- [전체 강의 목록] ---");
                 System.out.println("등록된 강의가 존재하지 않습니다.");
+                System.out.println("-------------------------");
+                return;
+            }
+            LectureSort.sort_Day_Time(sortLectureList);
+
+            System.out.println("---강의 목록---");
+            System.out.printf("%-25s | %-5s | %s%n", "강의명", "요일", "강의 시간");
+            System.out.println("-------------------------------------");
+            for (Sort lectureSort : sortLectureList)
+            {
+                System.out.printf("%-25s | %-5s | %d%n", lectureSort.name, lectureSort.day, lectureSort.time);
             }
         }
+        System.out.println();
     }
     public static void printLectureInfo(int index)
     {

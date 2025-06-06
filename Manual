@@ -16,4 +16,8 @@ Register 클래스에서 userList를 public static으로 선언하여 Login 클�
 
 Alarm 클래스에서 startScheduler 메소드가 호출되면, Timer가 현재 시간 확인 -> 조건에 맞는 알람을 보냄.(즉시 시작 -> 1초마다 반복)
 
+Main 클래스에서 showSelectMenu 메소드를 통하여 메뉴를 출력함. switch 문을 이용하여 메뉴를 선택하면 다른 메소드로 연결될 수 있도록 구현.
+여기서 default문 누락 시, 등록되어 있는 case 외의 번호를 입력했을 때 기능이 없음. -> default문을 이용하여 잘못된 입력임을 고지할 수 있도록 구현
 
+Schedule 클래스에서 printAllLectures 메소드는, Main 클래스에서 handleEventManagement 메소드가 실행되었을 때, 사용자 입력이 2일 경우 강의 목록을 출력하는데 요일과 시간별로 정렬하여 출력하기 위함.
+이 코드 속에서 사용되는 catch (NumberFormatException | NullPointerException e) 구문은 올바른 숫자 양식이 아닐 경우, null 값을 가지는 참조 변수에 접근 -> 메서드 호출 or 필드 사용을 동시에 함(2가지 역할을 동시에 처리하는 코드로, | 로 구분해줬음.)
