@@ -1,5 +1,7 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class EventSchedule
 {
@@ -8,6 +10,8 @@ public class EventSchedule
     private String description;
     private boolean notification;
     private String lectureTime;
+
+    public static final List<EventSchedule> eventScheduleList = new ArrayList<EventSchedule>();
 
     public EventSchedule(String eventName, LocalDateTime eventDateTime, String description, boolean notification, String lectureTime)
     {

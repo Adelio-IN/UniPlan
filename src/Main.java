@@ -14,7 +14,9 @@ public class Main {
     private static UserInput u = new UserInput();
     private static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        SampleData.initialize();
         System.out.println("UniPlan 로딩중...");
         System.out.println("\nUniPlan 로딩 완료!");
 
@@ -96,8 +98,10 @@ public class Main {
         }
     }
 
-    private static void handleEventManagement() {
-        while (true) {
+    private static void handleEventManagement()
+    {
+        while (true)
+        {
             System.out.println("--시간표 메뉴--");
             System.out.println("1. 강의 추가");
             System.out.println("2. 강의 목록 확인");
@@ -208,20 +212,5 @@ public class Main {
         } catch (NumberFormatException e) {
             System.out.println("오류: 숫자를 입력해야 합니다.");
         }
-    }
-
-    private static void loadSampleData()
-    {
-        System.out.println("---Sample data loading...---");
-        Student s1 = new Student("이인", 20241001, "컴퓨터공학과");
-        Student s2 = new Student("김길동", 20231002, "생명공학과");
-        Student s3 = new Student("박길동", 20211003, "컴퓨터보안학과");
-
-        Professor p1 = new Professor("김수영", 10372, "생명공학과");
-        Professor p2 = new Professor("박수영", 10373, "컴퓨터공학과");
-
-        schedule.setLectureList(0, "자바프로그래밍", "월", "10:00");
-        schedule.setLectureList(1, "자바프로그래밍", "월", "11:00");
-        schedule.setLectureList(2, "자바프로그래밍", "월", "12:00");
     }
 }

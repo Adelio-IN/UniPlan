@@ -14,7 +14,7 @@ public class Register
         private String password;
         private String role;
 
-        public User(String name, String id, String password)
+        public User(String name, String role, String id, String password)
         {
             this.name = name;
             this.id = id;
