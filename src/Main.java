@@ -1,3 +1,5 @@
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -115,6 +117,75 @@ public class Main {
         catch (NumberFormatException e)
         {
             System.out.println("인덱스와 강의 시간은 숫자로만 입력가능합니다.");
+        }
+    }
+
+    private static void handleAlarmManagement()
+    {
+        System.out.println("-----알람 관리 -----");
+        System.out.println("1. 알람 추가");
+        System.out.println("2. 알람 삭제");
+
+        String choice = sc.nextLine();
+
+        switch (choice)
+        {
+            case "1":
+                addLecture();
+                break;
+            case "2":
+                removeAlarm();
+                break;
+            default:
+                System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+        }
+
+    }
+    private static void addAlarm()
+    {
+        Schedule.printAllLectures();
+        System.out.println("알람을 설정할 강의의 인덱스를 입력하세요.");
+        int index = Integer.parseInt(sc.nextLine());
+
+        if(Schedule.lecture[index][0] == null || Schedule.lecture[index][0].isEmpty())
+        {
+            System.out.println("해당 인덱스에 등록된 강의가 존재하지 않습니다.");
+            return;
+        }
+
+        System.out.print("알람 시간을 입력하세요(ex: 2025-05-10 10:00");
+        String timeValueStr = sc.nextLine();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime setAlarm = LocalDateTime.parse(timeValueStr, formatter);
+
+        System.out.print("메시지를 입력하세요.");
+        String message = sc.nextLine();
+
+        Alarm.AlarmData.addAlarm(index, setAlarm, message);
+    }
+
+    private static void removeAlarm()
+    {
+        Alarm.AlarmData.printAllAlarms();
+
+        if (Alarm.AlarmData.getAlarmsCount() == 0) {
+            return;
+        }
+
+        System.out.print("삭제할 알람의 번호를 입력하세요 (취소: 0): ");
+        try {
+            int choice = Integer.parseInt(sc.nextLine());
+
+            if (choice == 0) {
+                System.out.println("삭제를 취소했습니다.");
+                return;
+            }
+
+            int indexToDelete = choice - 1;
+            Alarm.AlarmData.removeAlarm(indexToDelete);
+
+        } catch (NumberFormatException e) {
+            System.out.println("오류: 숫자를 입력해야 합니다.");
         }
     }
 

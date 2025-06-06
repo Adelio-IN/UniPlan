@@ -1,4 +1,5 @@
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -9,6 +10,7 @@ public class Alarm
 {
     static class AlarmData
     {
+        public static boolean getAlarms;
         private final int scheduleIndex;
         private final LocalDateTime alarmTime;
         private final String message;
@@ -21,6 +23,18 @@ public class Alarm
             this.alarmTime = alarmTime;
             this.message = message;
         }
+
+        public static void addAlarm(int index, LocalDateTime alarmTime, String message)
+        {
+            alarmList.add(new AlarmData(index, alarmTime, message));
+            System.out.println("알람 추가 완료" + alarmTime.format(DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm")) + " - " + message);
+        }
+
+        public static void printAllAlarms()
+        {
+            
+        }
+
         public int getScheduleIndex()
         {
             return scheduleIndex;
@@ -85,6 +99,19 @@ public class Alarm
             System.out.println("\n메시지: " + alarm.getMessage());
             System.out.println("\n마감 시간: " + alarm.getAlarmTime());
             System.out.println("--------------------------------");
+        }
+
+        public static void removeAlarm(int index)
+        {
+            if (index >= 0 && index < alarmList.size())
+            {
+                AlarmData removeAlarm = alarmList.remove(index);
+                System.out.println("✅ 알람이 삭제되었습니다: " + removeAlarm.message);
+            }
+            else
+            {
+                System.out.println("잘못된 번호입니다. 목록에 있는 번호를 입력해주세요.");
+            }
         }
     }
 }
