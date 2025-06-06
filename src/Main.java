@@ -75,7 +75,20 @@ public class Main
             case "2":
                 Register.processRegister(sc);
                 break;
+            case "3":
+                handleEventManagement();
+                break;
+            default:
+                System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+        }
+    }
 
+    private static void handleEventManagement()
+    {
+        while(true)
+        {
+            System.out.println("--시간표 메뉴--");
+            System.out.println("1. 강의 추가");
         }
     }
 
