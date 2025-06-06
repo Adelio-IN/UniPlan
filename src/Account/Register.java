@@ -70,6 +70,37 @@ public class Register
         }
         return false;
     }
+    public static boolean isValidName(String input)
+    {
+        if (input == null || input.isEmpty())
+        {
+            return false;
+        }
+        return input.matches("^[a-zA-Z가-힣]*$");
+    }
+    public static String getValidNameInput(Scanner sc)
+    {
+        String input;
+        while(true)
+        {
+            System.out.print("사용자 이름을 입력하세요. 한글/영문으로 입력가능하며 중단하려면 'exit'를 입력하세요.");
+            input = sc.nextLine();
+
+            if (input.isEmpty()) {
+                System.out.println("이름은 비워둘 수 없습니다.");
+                continue;
+            }
+            if (isValidName(input))
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("한글과 영문 대/소문자만 입력할 수 있습니다.");
+            }
+        }
+        return input;
+    }
 
     public static String getValidAlphaNumericInput(Scanner sc, String fieldName)
     {
@@ -120,6 +151,7 @@ public class Register
         }
         return id;
     }
+
     public static void processRegister(Scanner sc)
     {
         System.out.println("✨ 회원가입을 시작합니다. (중단하려면 언제든지 'exit'를 입력하세요)\n");
@@ -131,15 +163,16 @@ public class Register
             return;
         }
 
-        String password = getValidIdInput(sc, userList);
+        String password = getValidAlphaNumericInput(sc, "비밀번호");
         if (password.equalsIgnoreCase("exit"))
         {
             System.out.println("회원가입을 종료합니다");
         }
 
-        String name = getValidAlphaNumericInput(sc, "사용자 이름");
-        if (name.equalsIgnoreCase("exit")) {
-            System.out.println("회원가입을 종료합니다.");
+        String name = getValidNameInput(sc);
+        if (name.equalsIgnoreCase("exit"))
+        {
+            System.out.println("회원가입을 중단합니다.");
             return;
         }
         System.out.println("✅ [" + name + " (" + id + ")]님의 회원가입이 완료되었습니다!");
