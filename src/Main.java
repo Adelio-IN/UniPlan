@@ -50,8 +50,28 @@ public class Main {
         }
     }
 
-    private static void handleLogin() {
-        currentUser = login.tryLogin(sc);
+    private static void handleLogin()
+    {
+        System.out.println("\n--- 로그인 유형 선택 ---");
+        System.out.println("1. 교수 로그인");
+        System.out.println("2. 학생 로그인");
+        System.out.println("3. 이전 메뉴로");
+        System.out.print("메뉴 선택: ");
+
+        String choice = sc.nextLine();
+        String role = "";
+
+        switch (choice) {
+            case "1":
+                role = "교수";
+                break;
+            case "2":
+                role = "학생";
+                break;
+            default:
+                System.out.println("잘못된 입력입니다.");
+        }
+        currentUser = login.tryLogin(sc, role);
     }
 
     private static void showSelectMenu() {
@@ -83,7 +103,8 @@ public class Main {
             System.out.println("2. 강의 목록 확인");
             String choice = sc.nextLine();
 
-            switch (choice) {
+            switch (choice)
+            {
                 case "1":
                     addLecture();
                     break;

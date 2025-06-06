@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Login
 {
-    public Register.User tryLogin(Scanner sc)
+    public Register.User tryLogin(Scanner sc, String role)
     {
         System.out.println("--- 로그인 ---");
         System.out.print("\n아이디를 입력하세요.");
@@ -13,7 +13,7 @@ public class Login
 
         for (Register.User user : Register.userList) // Register 클래스에서 정의한 userList 사용
         {
-            if (user.getID().equals(id) && user.getPassword().equals(password))
+            if (user.getrole().equals(role) && user.getID().equals(id) && user.getPassword().equals(password))
             {
                 System.out.println(user.getName() + "님 로그인에 성공하셨습니다.");
                 return user;

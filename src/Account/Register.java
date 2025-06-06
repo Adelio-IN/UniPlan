@@ -12,12 +12,14 @@ public class Register
         private String name;
         private String id;
         private String password;
+        private String role;
 
         public User(String name, String id, String password)
         {
             this.name = name;
             this.id = id;
             this.password = password;
+            this.role = role;
         }
         public String getName()
         {
@@ -42,6 +44,10 @@ public class Register
         public Object getID()
         {
             return id;
+        }
+        public String getrole()
+        {
+        return role;
         }
     }
 
@@ -107,8 +113,7 @@ public class Register
         String input;
         while (true)
         {
-            System.out.printf("%s 를 입력하세요. " +
-                    "\n ! 영문 대/소문자, 숫자만 입력가능합니다. 중단하려면, 'exit'를 입력하세요", fieldName);
+            System.out.printf("%s 를 입력하세요. 영문(대/소문자), 숫자만 입력가능합니다. 중단하려면, 'exit'를 입력하세요 \n1", fieldName);
             input = sc.nextLine();
             if (input.equals("exit")) {
                 break;
@@ -152,10 +157,39 @@ public class Register
         return id;
     }
 
+    public static String getValidRole(Scanner sc)
+    {
+        String input;
+        while(true)
+        {
+            System.out.print("[교수 / 학생] 중 역할을 선택하세요. 중단하려면 언제든지 'exit'를 입력하세요");
+            input = sc.nextLine();
+            if(input.equalsIgnoreCase("exit"))
+            {
+                return "exit";
+            }
+            if (input.equals("교수") || input.equals("<UNK>"))
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("'교수'와 '학생'만 입력할 수 있습니다.");
+            }
+        }
+        return input;
+    }
+
     public static void processRegister(Scanner sc)
     {
         System.out.println("✨ 회원가입을 시작합니다. (중단하려면 언제든지 'exit'를 입력하세요)\n");
 
+        String role = getValidRole(sc);
+        if (role.equalsIgnoreCase("exit"))
+        {
+            System.out.println("회원가입을 종료합니다");
+            return;
+        }
         String id = getValidIdInput(sc, userList);
         if (id.equalsIgnoreCase("exit"))
         {

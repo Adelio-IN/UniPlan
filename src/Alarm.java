@@ -11,6 +11,7 @@ public class Alarm
     static class AlarmData
     {
         public static boolean getAlarms;
+        private static DateTimeFormatter formatter;
         private final int scheduleIndex;
         private final LocalDateTime alarmTime;
         private final String message;
@@ -32,7 +33,27 @@ public class Alarm
 
         public static void printAllAlarms()
         {
-            
+            System.out.println("---등록된 강의 목록---");
+            if(alarmList.isEmpty())
+            {
+                System.out.println("등록된 알람이 없습니다.");
+            }
+            else
+            {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            }
+            for (int i = 0; i < alarmList.size(); i++)
+            {
+                AlarmData alarm = alarmList.get(i);
+                String lectureInfo = Schedule.getLectureInfo(alarm.scheduleIndex);
+                System.out.printf("%d. [강의: %s] %s | 시간: %s | 상태: %s%n", (i + 1), lectureInfo, alarm.message, alarm.alarmTime.format(formatter), alarm.triggered ? "알람 울림" : "알람 울리기 전");
+                System.out.println();
+            }
+        }
+
+        public static int getAlarmsCount()
+        {
+            return alarmList.size();
         }
 
         public int getScheduleIndex()
@@ -62,7 +83,7 @@ public class Alarm
         public static void addAlarm(int scheduleIndex, LocalDateTime alarmTime, String message, boolean triggered)
         {
             alarmList.add(new AlarmData(scheduleIndex, alarmTime, message));
-            System.out.println("알람 추가 완료");
+            System.out.println("알람 추가 완료" + alarmTime.format(DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm")) + " - " + message);
         }
         public static void scheduler()
         {
