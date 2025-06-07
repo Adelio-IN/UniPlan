@@ -91,10 +91,13 @@ public class Schedule
             try
             {
                 String day = lecture[i][1];
-                int time = Integer.parseInt(lecture[i][2]);
-                sortLectureList.add(new Sort(name, day, time));
-            } catch (NumberFormatException |
-                     NullPointerException e) // 올바른 숫자 양식이 아닐 경우, null 값을 가지는 참조 변수에 접근 -> 메서드 호출 or 필드 사용을 동시에 함
+                String time = (lecture[i][2]);
+
+                if (name != null && !name.isEmpty() && day != null && !day.isEmpty() && time != null && !time.isEmpty())
+                {
+                    sortLectureList.add(new Sort(name, day, time));
+                }
+            } catch (Exception e) // 올바른 숫자 양식이 아닐 경우, null 값을 가지는 참조 변수에 접근 -> 메서드 호출 or 필드 사용을 동시에 함
             {
                 System.out.println(name + " 강의의 시간 정보가 올바르지 않아 목록에서 제외됩니다.");
             }
