@@ -12,9 +12,9 @@ public class Register
         private String name;
         private String id;
         private String password;
-        private String role;
+        private UserType role;
 
-        public User(String name, String role, String id, String password)
+        public User(String name, UserType role, String id, String password)
         {
             this.name = name;
             this.id = id;
@@ -36,16 +36,12 @@ public class Register
             return password;
         }
 
-        public void display()
-        {
-            System.out.println("이름: " + name + ", ID: " + id);
-        }
-
         public Object getID()
         {
             return id;
         }
-        public String getrole()
+
+        public UserType getRole()
         {
         return role;
         }
@@ -66,10 +62,13 @@ public class Register
         return input.matches("^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$");
     }
 
-    public static boolean isIdTaken(List<User> userList, String id) {
+    public static boolean isIdTaken(String id)
+    {
         {
-            for (User user : userList) {
-                if (user.getID().equals(id)) {
+            for (User user : userList)
+            {
+                if (user.getID().equals(id))
+                {
                     return true;
                 }
             }
@@ -91,8 +90,12 @@ public class Register
         {
             System.out.print("사용자 이름을 입력하세요. 한글/영문으로 입력가능하며 중단하려면 'exit'를 입력하세요.");
             input = sc.nextLine();
-
-            if (input.isEmpty()) {
+            if (input.equalsIgnoreCase("exit"))
+            {
+                return "exit";
+            }
+            if (input.isEmpty())
+            {
                 System.out.println("이름은 비워둘 수 없습니다.");
                 continue;
             }
@@ -115,22 +118,27 @@ public class Register
         {
             System.out.printf("%s 를 입력하세요. 영문(대/소문자), 숫자만 입력가능합니다. 중단하려면, 'exit'를 입력하세요 \n1", fieldName);
             input = sc.nextLine();
-            if (input.equals("exit")) {
-                break;
+            if (input.equalsIgnoreCase("exit"))
+            {
+                return "exit";
             }
-            if (input.isEmpty()) {
+            if (input.isEmpty())
+            {
                 System.out.println(fieldName + "은 비워둘 수 없습니다. 재시도하세요.");
                 continue;
             }
-            if (isValidAlphaNumeric(input)) {
+            if (isValidAlphaNumeric(input))
+            {
                 break;
-            } else {
+            }
+            else
+            {
                 System.out.println(fieldName + "영문 대/소문자와 숫자만 입력할 수 있습니다. 재시도하세요.");
             }
         }
         return input;
     }
-    public static String getValidIdInput(Scanner sc, List<User> userList)
+    public static String getValidIdInput(Scanner sc)
     {
         String id;
         while (true)
@@ -148,7 +156,7 @@ public class Register
                 System.out.println("영문자와 숫자를 포함하여 8자 이상이어야 합니다. 다시 입력하세요.");
                 continue;
             }
-            if (isIdTaken(userList, id)) {
+            if (isIdTaken(id)) {
                 System.out.println("⚠️ [" + id + "]은(는) 이미 존재하는 아이디입니다. 다른 아이디를 사용해주세요.");
                 continue;
             }
@@ -168,7 +176,7 @@ public class Register
             {
                 return "exit";
             }
-            if (input.equals("교수") || input.equals("<UNK>"))
+            if (input.equals("교수") || input.equals("학생"))
             {
                 break;
             }
@@ -184,30 +192,47 @@ public class Register
     {
         System.out.println("✨ 회원가입을 시작합니다. (중단하려면 언제든지 'exit'를 입력하세요)\n");
 
-        String role = getValidRole(sc);
-        if (role.equalsIgnoreCase("exit"))
+        String roleString = getValidRole(sc);
+        if (roleString.equalsIgnoreCase("exit"))
         {
-            System.out.println("회원가입을 종료합니다");
+            System.out.println("회원가입이 중단되었습니다.");
             return;
         }
-        String id = getValidIdInput(sc, userList);
+
+        String id = getValidIdInput(sc);
         if (id.equalsIgnoreCase("exit"))
         {
-            System.out.println("회원가입을 종료합니다");
+            System.out.println("회원가입이 중단되었습니다.");
             return;
         }
 
         String password = getValidAlphaNumericInput(sc, "비밀번호");
         if (password.equalsIgnoreCase("exit"))
         {
-            System.out.println("회원가입을 종료합니다");
+            System.out.println("회원가입이 중단되었습니다.");
+            return;
         }
 
         String name = getValidNameInput(sc);
         if (name.equalsIgnoreCase("exit"))
         {
-            System.out.println("회원가입을 중단합니다.");
+            System.out.println("회원가입이 중단되었습니다.");
             return;
+        }
+
+        UserType userType;
+        if(roleString.equals("교수"))
+        {
+            userType = UserType.Professor;
+        }
+        else if(roleString.equals("학생"))
+        {
+            userType = UserType.Student;
+        }
+        else
+        {
+            userType = null;
+            System.out.println("존재하지 않는 역할입니다.");
         }
         System.out.println("✅ [" + name + " (" + id + ")]님의 회원가입이 완료되었습니다!");
         System.out.println("------------------------------------");
