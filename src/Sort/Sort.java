@@ -1,9 +1,10 @@
-public class Sort {
+public class Sort
+{
     public String name;
     public String day;
-    public int time;
+    public String time;
 
-    public Sort(String name, String day, int time) {
+    public Sort(String name, String day, String time) {
         this.name = name;
         this.day = day;
         this.time = time;
