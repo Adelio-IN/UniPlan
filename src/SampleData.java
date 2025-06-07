@@ -18,8 +18,8 @@ public class SampleData
             Schedule.setLectureList(3, "데이터베이스", "목", "13");
             Schedule.setLectureList(4, "컴퓨터네트워크", "금", "16");
 
-            Alarm.AlarmData.addAlarm(2, LocalDateTime.of(2025, 6, 30, 14, 0), "17주차 과제 제출일입니다.");
-            Alarm.AlarmData.addAlarm(4, LocalDateTime.of(2025, 7, 30, 9, 0), "퀴즈가 예정되어 있습니다.");
+            Alarm.addAlarm(2, LocalDateTime.of(2025, 6, 30, 14, 0), "17주차 과제 제출일입니다.");
+            Alarm.addAlarm(4, LocalDateTime.of(2025, 7, 30, 9, 0), "퀴즈가 예정되어 있습니다.");
             System.out.println("시스템: 샘플 데이터 생성이 완료되었습니다.");
         }
     }

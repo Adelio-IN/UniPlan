@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 public class Schedule {
     static final int maxLectureList = 10;
@@ -15,6 +16,7 @@ public class Schedule {
             lecture[i][2] = "";
         }
     }
+    public static final List<Alarm.AlarmData> alarmList = new ArrayList<>();
 
     public static void main(String[] args) {
         for (int i = 0; i < maxLectureList; i++)

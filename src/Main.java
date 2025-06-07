@@ -3,7 +3,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Main {
-    private static Register.User currentUser = null;
+    private static User currentUser = null;
     private static final Login login = new Login();
     private static Scanner sc = new Scanner(System.in);
 
@@ -14,23 +14,29 @@ public class Main {
         System.out.println("UniPlan 로딩중...");
         System.out.println("\nUniPlan 로딩 완료!");
 
-        while (true) {
-            if (currentUser == null) {
+        while (true)
+        {
+            if (currentUser == null)
+            {
                 showLoginMenu();
-            } else {
-                showLoginMenu();
+            }
+            else
+            {
+                showSelectMenu();
             }
         }
     }
 
-    private static void showLoginMenu() {
+    private static void showLoginMenu()
+    {
         System.out.println("\n-----UniPlan Main-----");
         System.out.println("1. 로그인");
         System.out.println("2. 회원가입");
         System.out.println("3. exit");
 
         String choice = sc.nextLine();
-        switch (choice) {
+        switch (choice)
+        {
             case "1":
                 handleLogin();
                 break;
@@ -39,6 +45,7 @@ public class Main {
                 break;
             case "3":
                 System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                Alarm.stopScheduler();
                 sc.close();
                 System.exit(0);
             default:
@@ -52,6 +59,7 @@ public class Main {
         System.out.println("1. 교수 로그인");
         System.out.println("2. 학생 로그인");
         System.out.println("3. 이전 메뉴로");
+        System.out.println("4. exit");
         System.out.print("메뉴 선택: ");
 
         String choice = sc.nextLine();
@@ -66,20 +74,38 @@ public class Main {
                 break;
             case "3":
                 return;
+            case "4":
+                System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                Alarm.stopScheduler();
+                sc.close();
+                System.exit(0);
             default:
                 System.out.println("잘못된 입력입니다.");
         }
-        currentUser = login.tryLogin(sc, role);
+        User user = login.tryLogin(sc, role);
+        if(user != null)
+        {
+            System.out.println(user.getName() + "님 로그인에 성공하셨습니다.");
+            currentUser = user;
+        }
+        else
+        {
+            System.out.println("아이디 혹은 비밀번호가 일치하지 않거나, 역할이 일치하지 않습니다.");
+        }
     }
 
-    private static void showSelectMenu() {
+    private static void showSelectMenu()
+    {
         System.out.println("-----UniPlan 메뉴-----");
         System.out.println("1. 시간표 관리");
         System.out.println("2. 알람 관리");
         System.out.println("3. 이벤트/과제 관리");
+        System.out.println("4. 이전 메뉴로");
+        System.out.println("5. exit");
 
         String choice = sc.nextLine();
-        switch (choice) {
+        switch (choice)
+        {
             case "1":
                 handleLogin();
                 break;
@@ -89,6 +115,13 @@ public class Main {
             case "3":
                 handleEventManagement();
                 break;
+            case "4":
+                return;
+            case "5":
+                System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                Alarm.stopScheduler();
+                sc.close();
+                System.exit(0);
             default:
                 System.out.println("잘못된 입력입니다. 다시 시도하세요.");
         }
@@ -103,10 +136,7 @@ public class Main {
             System.out.println("2. 강의 목록 확인");
             System.out.println("3. 이전 메뉴로");
             String choice = sc.nextLine();
-            if(choice.equals("exit"))
-            {
-                choice = "4";
-            }
+
             switch (choice)
             {
                 case "1":
@@ -118,7 +148,10 @@ public class Main {
                 case "3":
                     return;
                 case "4":
-                    
+                    System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                    Alarm.stopScheduler();
+                    sc.close();
+                    System.exit(0);
                 default:
                     System.out.println("잘못된 입력입니다. 다시 시도하세요.");
             }
@@ -151,32 +184,37 @@ public class Main {
 
     private static void handleAlarmManagement()
     {
-        System.out.println("-----알람 관리 -----");
-        System.out.println("1. 알람 추가");
-        System.out.println("2. 알람 삭제");
-        System.out.println("3. 알람 리스트 확인");
-        System.out.println("exit");
+        while(true)
+        {
+            System.out.println("-----알람 관리 -----");
+            System.out.println("1. 알람 추가");
+            System.out.println("2. 알람 삭제");
+            System.out.println("3. 알람 리스트 확인");
+            System.out.println("exit");
 
-        String choice = sc.nextLine();
-        if (choice.equalsIgnoreCase("exit"))
-        {
-            choice =  "3";
-        }
-        switch (choice)
-        {
-            case "1":
-                addAlarm();
-                break;
-            case "2":
-                removeAlarm();
-                break;
-            case "3":
-                Alarm.printAllAlarms();
-                break;
-            default:
-                System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+            String choice = sc.nextLine();
+            if (choice.equalsIgnoreCase("exit"))
+            {
+                choice =  "3";
+            }
+            switch (choice)
+            {
+                case "1":
+                    addAlarm();
+                    break;
+                case "2":
+                    removeAlarm();
+                    break;
+                case "3":
+                    Alarm.printAllAlarms();
+                    break;
+                default:
+                    System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+            }
         }
     }
+
+
 
     private static void addAlarm()
     {

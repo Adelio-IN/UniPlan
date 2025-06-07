@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Login
 {
-    public Register.User tryLogin(Scanner sc, String role)
+    public User tryLogin(Scanner sc, String role)
     {
         System.out.println("--- 로그인 ---");
         System.out.print("\n아이디를 입력하세요.");
