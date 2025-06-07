@@ -13,9 +13,10 @@ public class Schedule
     {
         for (int i = 0; i < maxLectureList; i++)
         {
-            lecture[i] = new ArrayList<>().toArray(new String[0]);
+            lecture[i][0] = "";
+            lecture[i][1] = "";
+            lecture[i][2] = "";
         }
-        System.out.println("Schedule Lecture List 초기화 완료" + maxLectureList);
     }
     public static void main(String[] args)
     {
@@ -37,7 +38,7 @@ public class Schedule
             lecture[index][0] = name;
             lecture[index][1] = day;
             lecture[index][2] = time;
-            System.out.printf("일정 설정 완료.", index, name, day, time);
+            System.out.println("일정 설정 완료.");
         }
         else
         {
@@ -48,60 +49,33 @@ public class Schedule
     {
         if (index >= 0)
         {
-            return lecture[index][0] + " " + lecture[index][1] + " " + lecture[index][2];
+            return String.format("%s (%s %s)", lecture[index][0], lecture[index][1], lecture[index][2]);
         }
         return "등록되지 않은 강의입니다";
-    }
-    public static void addLecture(int index, String lectureName)
-    {
-        if(index >= 0 && index < maxLectureList)
-        {
-            lectureList[index].add(lectureName);
-        }
-        else
-        {
-            System.out.println("유효하지 않습니다.");
-        }
-    }
-    public static int getLectureCount(int index)
-    {
-        if (index >= 0 && index < maxLectureList)
-        {
-            return lectureList[index].size();
-        }
-        return 0;
-    }
-
-    public static void loadSampleData()
-    {
-        System.out.println("\n샘플 데이터를 로드합니다...");
-        setLectureList(0, "자바 프로그래밍", "월", "10:00");
-        setLectureList(1, "웹 프로그래밍 기초", "화", "13:30");
-        setLectureList(3, "데이터베이스", "목", "15:00");
-        setLectureList(9, "컴퓨터 구조", "금", "09:00");
-        System.out.println("샘플 데이터 로드 완료.");
     }
 
     public static void printAllLectures()
     {
+        System.out.println("-----전체 강의 목록-----");
         List<Sort> sortLectureList = new ArrayList<>();
         for (int i = 0; i < maxLectureList; i++)
         {
             String name = lecture[i][0];
+            String day = lecture[i][1];
+            String time = (lecture[i][2]);
+
             try
             {
-                String day = lecture[i][1];
-                String time = (lecture[i][2]);
-
                 if (name != null && !name.isEmpty() && day != null && !day.isEmpty() && time != null && !time.isEmpty())
                 {
                     sortLectureList.add(new Sort(name, day, time));
                 }
-            } catch (Exception e) // 올바른 숫자 양식이 아닐 경우, null 값을 가지는 참조 변수에 접근 -> 메서드 호출 or 필드 사용을 동시에 함
+            } catch (Exception e)
             {
                 System.out.println(name + " 강의의 시간 정보가 올바르지 않아 목록에서 제외됩니다.");
             }
-            if (sortLectureList.isEmpty()) {
+            if (sortLectureList.isEmpty())
+            {
                 System.out.println("\n--- [전체 강의 목록] ---");
                 System.out.println("등록된 강의가 존재하지 않습니다.");
                 System.out.println("-------------------------");
