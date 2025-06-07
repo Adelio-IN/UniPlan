@@ -1,22 +1,16 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 public class Main {
     private static Register.User currentUser = null;
     private static final Login login = new Login();
-    private static SystemClock clock = new SystemClock();
-    private static Schedule schedule = new Schedule();
-    private static LectureSort LectureSort = new LectureSort();
-    private static Register r = new Register();
-    private static UserInput u = new UserInput();
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args)
     {
         SampleData.initialize();
+        Alarm.startScheduler();
         System.out.println("UniPlan 로딩중...");
         System.out.println("\nUniPlan 로딩 완료!");
 
@@ -70,6 +64,8 @@ public class Main {
             case "2":
                 role = "학생";
                 break;
+            case "3":
+                return;
             default:
                 System.out.println("잘못된 입력입니다.");
         }
@@ -79,7 +75,7 @@ public class Main {
     private static void showSelectMenu() {
         System.out.println("-----UniPlan 메뉴-----");
         System.out.println("1. 시간표 관리");
-        System.out.println("2. 알람");
+        System.out.println("2. 알람 관리");
         System.out.println("3. 이벤트/과제 관리");
 
         String choice = sc.nextLine();
@@ -88,7 +84,7 @@ public class Main {
                 handleLogin();
                 break;
             case "2":
-                Register.processRegister(sc);
+                handleAlarmManagement();
                 break;
             case "3":
                 handleEventManagement();
@@ -105,8 +101,12 @@ public class Main {
             System.out.println("--시간표 메뉴--");
             System.out.println("1. 강의 추가");
             System.out.println("2. 강의 목록 확인");
+            System.out.println("3. 이전 메뉴로");
             String choice = sc.nextLine();
-
+            if(choice.equals("exit"))
+            {
+                choice = "4";
+            }
             switch (choice)
             {
                 case "1":
@@ -115,6 +115,10 @@ public class Main {
                 case "2":
                     Schedule.printAllLectures();
                     break;
+                case "3":
+                    return;
+                case "4":
+                    
                 default:
                     System.out.println("잘못된 입력입니다. 다시 시도하세요.");
             }
@@ -150,22 +154,30 @@ public class Main {
         System.out.println("-----알람 관리 -----");
         System.out.println("1. 알람 추가");
         System.out.println("2. 알람 삭제");
+        System.out.println("3. 알람 리스트 확인");
+        System.out.println("exit");
 
         String choice = sc.nextLine();
-
+        if (choice.equalsIgnoreCase("exit"))
+        {
+            choice =  "3";
+        }
         switch (choice)
         {
             case "1":
-                addLecture();
+                addAlarm();
                 break;
             case "2":
                 removeAlarm();
                 break;
+            case "3":
+                Alarm.printAllAlarms();
+                break;
             default:
                 System.out.println("잘못된 입력입니다. 다시 시도하세요.");
         }
-
     }
+
     private static void addAlarm()
     {
         Schedule.printAllLectures();
@@ -186,14 +198,15 @@ public class Main {
         System.out.print("메시지를 입력하세요.");
         String message = sc.nextLine();
 
-        Alarm.AlarmData.addAlarm(index, setAlarm, message);
+        Alarm.addAlarm(index, setAlarm, message);
     }
 
     private static void removeAlarm()
     {
-        Alarm.AlarmData.printAllAlarms();
+        Alarm.printAllAlarms();
 
-        if (Alarm.AlarmData.getAlarmsCount() == 0) {
+        if (Alarm.getAlarmsCount() == 0)
+        {
             return;
         }
 
@@ -207,7 +220,7 @@ public class Main {
             }
 
             int indexToDelete = choice - 1;
-            Alarm.AlarmData.removeAlarm(indexToDelete);
+            Alarm.removeAlarm(indexToDelete);
 
         } catch (NumberFormatException e) {
             System.out.println("오류: 숫자를 입력해야 합니다.");
