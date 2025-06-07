@@ -4,19 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.regex.Pattern;
 
-public class Alarm
-{
+public class Alarm {
+
     static class AlarmData
     {
-        public static boolean getAlarms;
-        private static DateTimeFormatter formatter;
         private final int scheduleIndex;
         private final LocalDateTime alarmTime;
         private final String message;
         private boolean triggered = false;
-
 
         public AlarmData(int scheduleIndex, LocalDateTime alarmTime, String message)
         {
@@ -25,37 +21,7 @@ public class Alarm
             this.message = message;
         }
 
-        public static void addAlarm(int index, LocalDateTime alarmTime, String message)
-        {
-            alarmList.add(new AlarmData(index, alarmTime, message));
-            System.out.println("알람 추가 완료" + alarmTime.format(DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm")) + " - " + message);
-        }
-
-        public static void printAllAlarms()
-        {
-            System.out.println("---등록된 강의 목록---");
-            if(alarmList.isEmpty())
-            {
-                System.out.println("등록된 알람이 없습니다.");
-            }
-            else
-            {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            }
-            for (int i = 0; i < alarmList.size(); i++)
-            {
-                AlarmData alarm = alarmList.get(i);
-                String lectureInfo = Schedule.getLectureInfo(alarm.scheduleIndex);
-                System.out.printf("%d. [강의: %s] %s | 시간: %s | 상태: %s%n", (i + 1), lectureInfo, alarm.message, alarm.alarmTime.format(formatter), alarm.triggered ? "알람 울림" : "알람 울리기 전");
-                System.out.println();
-            }
-        }
-
-        public static int getAlarmsCount()
-        {
-            return alarmList.size();
-        }
-
+        // Getters and Setters
         public int getScheduleIndex()
         {
             return scheduleIndex;
@@ -68,71 +34,108 @@ public class Alarm
         {
             return message;
         }
-        public boolean isTriggered()
-        {
+        public boolean isTriggered() {
             return triggered;
         }
         public void setTriggered(boolean triggered)
         {
             this.triggered = triggered;
         }
+    }
 
-        private static final List<AlarmData> alarmList = new ArrayList<>();
-        private static Timer schduleTimer;
+    private static final List<AlarmData> alarmList = new ArrayList<>();
+    private static Timer schedulerTimer;
 
-        public static void addAlarm(int scheduleIndex, LocalDateTime alarmTime, String message, boolean triggered)
+    public static void addAlarm(int scheduleIndex, LocalDateTime alarmTime, String message)
+    {
+        alarmList.add(new AlarmData(scheduleIndex, alarmTime, message));
+        System.out.printf("🔔 알람 추가 완료: %s - \"%s\"\n",
+                alarmTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")), message);
+    }
+
+    public static void startScheduler()
+    {
+        if (schedulerTimer != null)
         {
-            alarmList.add(new AlarmData(scheduleIndex, alarmTime, message));
-            System.out.println("알람 추가 완료" + alarmTime.format(DateTimeFormatter.ofPattern("yyyy-MM-DD HH:mm")) + " - " + message);
+            return;
         }
-        public static void scheduler()
+        schedulerTimer = new Timer(true);
+        TimerTask checkTask = new TimerTask()
         {
-            if (schduleTimer != null)
+            @Override
+            public void run()
             {
-                System.out.println("실행중");
-            }
-            schduleTimer = new Timer();
-            TimerTask task = new TimerTask()
-            {
-                @Override
-                public void run()
+                LocalDateTime now = SystemClock.now();
+                for (AlarmData alarm : alarmList)
                 {
-                    LocalDateTime now = LocalDateTime.now();
-
-                    for(AlarmData alarm : alarmList)
+                    if (!alarm.isTriggered() && !alarm.getAlarmTime().isAfter(now))
                     {
-                        if(!alarm.isTriggered() && alarm.getAlarmTime().isAfter(now))
-                        {
-                            ringAlarm(alarm);
-                            alarm.setTriggered(true);
-                        }
+                        ringAlarm(alarm);
+                        alarm.setTriggered(true);
                     }
                 }
-            };
-            schduleTimer.schedule(task, 0, 1000); // task를 즉시 시작하여 1초마다 반복 실행
-        }
-        private static void ringAlarm(AlarmData alarm)
-        {
-            String lectureInfo = Schedule.getLectureInfo(alarm.getScheduleIndex());
-
-            System.out.println("-----------\uD83D\uDEA8---------");
-            System.out.println("\n강의 명:" + lectureInfo);
-            System.out.println("\n메시지: " + alarm.getMessage());
-            System.out.println("\n마감 시간: " + alarm.getAlarmTime());
-            System.out.println("--------------------------------");
-        }
-
-        public static void removeAlarm(int index)
-        {
-            if (index >= 0 && index < alarmList.size())
-            {
-                AlarmData removeAlarm = alarmList.remove(index);
-                System.out.println("✅ 알람이 삭제되었습니다: " + removeAlarm.message);
             }
-            else
+        };
+        schedulerTimer.scheduleAtFixedRate(checkTask, 0, 1000);
+        System.out.println("⏰ 알람 스케줄러가 시작되었습니다.");
+    }
+
+    public static void stopScheduler() {
+        if (schedulerTimer != null) {
+            schedulerTimer.cancel();
+            schedulerTimer = null;
+            System.out.println("⏰ 알람 스케줄러가 중지되었습니다.");
+        }
+    }
+
+    private static void ringAlarm(AlarmData alarm) {
+        String lectureInfo = Schedule.getLectureInfo(alarm.getScheduleIndex());
+        System.out.println("\n================ 🚨 알람 🚨 ================");
+        System.out.println("\n  강의 명: " + lectureInfo);
+        System.out.println("\n  메시지: " + alarm.getMessage());
+        System.out.println("\n  설정된 시간: " + alarm.getAlarmTime().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+        System.out.println("================================================");
+    }
+
+    public static void printAllAlarms() {
+        System.out.println("\n등록된 알람 목록 ---");
+        if (alarmList.isEmpty())
+        {
+            System.out.println("등록된 알람이 없습니다.");
+        }
+        else
+        {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            for (int i = 0; i < alarmList.size(); i++)
             {
-                System.out.println("잘못된 번호입니다. 목록에 있는 번호를 입력해주세요.");
+                AlarmData alarm = alarmList.get(i);
+                String lectureInfo = Schedule.getLectureInfo(alarm.getScheduleIndex());
+                System.out.printf("%d. [강의: %s] %s | 시간: %s | 상태: %s\n",
+                        (i + 1), lectureInfo, alarm.getMessage(),
+                        alarm.getAlarmTime().format(formatter),
+                        alarm.isTriggered() ? "알람 울림" : "알람 울리기 전");
             }
+        }
+        System.out.println("------------------------------");
+    }
+
+    public static int getAlarmsCount()
+    {
+        return alarmList.size();
+    }
+
+    public static boolean removeAlarm(int index)
+    {
+        if (index >= 0 && index < alarmList.size())
+        {
+            AlarmData removedAlarm = alarmList.remove(index);
+            System.out.println("✅ 알람이 삭제되었습니다: \"" + removedAlarm.getMessage());
+            return true;
+        }
+        else
+        {
+            System.out.println("잘못된 번호입니다. 목록에 있는 번호를 입력해주세요.");
+            return false;
         }
     }
 }
