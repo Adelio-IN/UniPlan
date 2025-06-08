@@ -107,13 +107,13 @@ public class Main {
         switch (choice)
         {
             case "1":
-                handleLogin();
+                handleEventManagement();
                 break;
             case "2":
                 handleAlarmManagement();
                 break;
             case "3":
-                handleEventManagement();
+                handleAlarmManagement();
                 break;
             case "4":
                 return;
@@ -213,8 +213,6 @@ public class Main {
             }
         }
     }
-
-
 
     private static void addAlarm()
     {

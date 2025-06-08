@@ -1,25 +1,25 @@
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.time.format.DateTimeFormatter;
 
 public class EventSchedule
 {
+    private int lectureIndex;
     private String eventName;
     private LocalDateTime eventDateTime;
     private String description;
     private boolean notification;
-    private String lectureTime;
 
-    public static final List<EventSchedule> eventScheduleList = new ArrayList<EventSchedule>();
+    public static final List<EventSchedule> eventList = new ArrayList<>();
 
-    public EventSchedule(String eventName, LocalDateTime eventDateTime, String description, boolean notification, String lectureTime)
+    public EventSchedule(int lectureIndex, String eventName, LocalDateTime eventDateTime, String description)
     {
         this.eventName = eventName;
+        this.lectureIndex = lectureIndex;
         this.eventDateTime = eventDateTime;
         this.description = description;
         this.notification = false;
-        this.lectureTime = lectureTime;
     }
 
     public String getEventName()
@@ -34,25 +34,14 @@ public class EventSchedule
     {
         return description;
     }
-
-    public boolean isNotification()
+    public int getLectureIndex()
     {
-        return notification;
-    }
-
-    public String getLectureTime()
-    {
-        return lectureTime;
-    }
-
-    public void setNotification(boolean notificationSent)
-    {
-        this.notification = notificationSent;
+        return lectureIndex;
     }
     @Override
     public String toString()
     {
-        return "EventSchedule [eventName=" + eventName + ", eventDateTime=" + eventDateTime.format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
-                + ", description=" + description + "']";
+        String lectureInfo = Schedule.getLectureInfo(this.lectureIndex);
+        return String.format("[강의: %s] %s - %s (%s)", lectureInfo, this.eventName, this.description, this.eventDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
     }
 }

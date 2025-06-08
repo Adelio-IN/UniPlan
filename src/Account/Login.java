@@ -35,7 +35,7 @@ public class Login
 
         for (Register.User user : Register.userList)
         {
-            if (user.getRole() == targetType && user.getID().equals(id) && user.getPassword().equals(password))
+            if (user.getRole() == targetType && user.getId().equals(id) && user.getPassword().equals(password))
             {
                 System.out.println(user.getName() + "님 로그인에 성공하셨습니다.");
             }
