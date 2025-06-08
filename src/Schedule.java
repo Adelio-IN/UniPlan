@@ -31,7 +31,8 @@ public class Schedule {
         printAllLectures();
     }
 
-    public static void setLectureList(int index, String name, String day, String time) {
+    public static void setLectureList(int index, String name, String day, String time)
+    {
         if (index >= 0 && index < maxLectureList) {
             lecture[index][0] = name;
             lecture[index][1] = day;
@@ -86,7 +87,7 @@ public class Schedule {
         System.out.println("-------------------------------------");
         for (Sort lectureSort : sortLectureList)
         {
-            System.out.printf("%-25s | %-5s | %d%n", lectureSort.name, lectureSort.day, lectureSort.time);
+            System.out.printf("%-25s | %-4s | %s%n", lectureSort.name, lectureSort.day, lectureSort.time);
         }
         System.out.println("-------------------------------------");
         System.out.println(getLectureCount() + "개의 강의가 등록되어 있습니다.");

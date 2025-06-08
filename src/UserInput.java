@@ -3,7 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 
-abstract class SelectUser {
+abstract class SelectUser
+{
     private String name;
     private int id;
 

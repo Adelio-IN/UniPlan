@@ -55,42 +55,16 @@ public class Main {
 
     private static void handleLogin()
     {
-        System.out.println("\n--- 로그인 유형 선택 ---");
-        System.out.println("1. 교수 로그인");
-        System.out.println("2. 학생 로그인");
-        System.out.println("3. 이전 메뉴로");
-        System.out.println("4. exit");
-        System.out.print("메뉴 선택: ");
+        User user = login.tryLogin(sc);
 
-        String choice = sc.nextLine();
-        String role = "";
-
-        switch (choice) {
-            case "1":
-                role = "교수";
-                break;
-            case "2":
-                role = "학생";
-                break;
-            case "3":
-                return;
-            case "4":
-                System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
-                Alarm.stopScheduler();
-                sc.close();
-                System.exit(0);
-            default:
-                System.out.println("잘못된 입력입니다.");
-        }
-        User user = login.tryLogin(sc, role);
-        if(user != null)
+        if (user != null)
         {
-            System.out.println(user.getName() + "님 로그인에 성공하셨습니다.");
+            System.out.println(user.getName() + " 님 로그인에 성공하셨습니다");
             currentUser = user;
         }
         else
         {
-            System.out.println("아이디 혹은 비밀번호가 일치하지 않거나, 역할이 일치하지 않습니다.");
+            System.out.println("로그인에 실패하였습니다.");
         }
     }
 
@@ -135,6 +109,7 @@ public class Main {
             System.out.println("1. 강의 추가");
             System.out.println("2. 강의 목록 확인");
             System.out.println("3. 이전 메뉴로");
+            System.out.println("4. exit");
             String choice = sc.nextLine();
 
             switch (choice)
@@ -190,7 +165,7 @@ public class Main {
             System.out.println("1. 알람 추가");
             System.out.println("2. 알람 삭제");
             System.out.println("3. 알람 리스트 확인");
-            System.out.println("exit");
+            System.out.println("4. exit");
 
             String choice = sc.nextLine();
             if (choice.equalsIgnoreCase("exit"))
@@ -208,6 +183,11 @@ public class Main {
                 case "3":
                     Alarm.printAllAlarms();
                     break;
+                case "4":
+                    System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                    Alarm.stopScheduler();
+                    sc.close();
+                    System.exit(0);
                 default:
                     System.out.println("잘못된 입력입니다. 다시 시도하세요.");
             }
@@ -228,8 +208,10 @@ public class Main {
 
         System.out.print("알람 시간을 입력하세요(ex: 2025-05-10 10:00");
         String timeValueStr = sc.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime setAlarm = LocalDateTime.parse(timeValueStr, formatter);
+
+        System.out.print("메시지를 입력하세요: ");
 
         System.out.print("메시지를 입력하세요.");
         String message = sc.nextLine();

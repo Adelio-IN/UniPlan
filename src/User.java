@@ -1,44 +1,44 @@
 enum UserType
 {
-    Professor, Student
+    Student, Professor
 }
-
 public class User
 {
     private String name;
     private String password;
-    private UserType userType;
+    private UserType role;
     private String id;
+    private String classNumber;
 
-    public User(String name, String id, String password, UserType userType)
+    public User(String name, UserType role, String classNumber, String id, String password)
     {
         this.name = name;
+        this.role = role;
+        this.classNumber = classNumber;
         this.id = id;
         this.password = password;
-        this.userType = userType;
+
     }
 
-    private String getUserId()
-    {
-        return id;
-    }
-
-    private String getPassword()
-    {
-        return password;
-    }
-
+    // --- Getter 메소드들 ---
     public String getName()
     {
         return name;
     }
-
-    public UserType getUserType()
+    public String getId()
     {
-        return userType;
+        return id;
     }
-    public void display()
+    public String getPassword()
     {
-        System.out.println("이름: " + name + ", ID: " + id);
+        return password;
+    }
+    public UserType getRole()
+    {
+        return role;
+    }
+    public String getClassNumber()
+    {
+        return classNumber;
     }
 }

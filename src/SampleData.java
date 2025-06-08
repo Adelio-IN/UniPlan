@@ -3,16 +3,17 @@ import java.time.LocalDateTime;
 public class SampleData
 {
     public static void initialize() {
-        if (!Register.userList.isEmpty() && SystemRoster.isEmpty())
+        if (Register.userList.isEmpty() && SystemRoster.isEmpty())
         {
             System.out.println("---Generating Sample Data---");
 
             SystemRoster.loadDataRoaster();
 
-            Register.userList.add(new Register.User("이인", UserType.Student, "202139079","rkdt1234", "Lyu1234ty"));
-            Register.userList.add(new Register.User("정시우", UserType.Professor, "10239", "rlot1234", "Tue12034"));
-            Register.userList.add(new Register.User("박시현", UserType.Student, "202508199", "riot1234", "Lke12093"));
-            Register.userList.add(new Register.User("권유하", UserType.Professor, "10973", "quid1234", "Mnx0923"));
+            Register.userList.add(new User("이인", UserType.Student, "202139079","rkdt1234", "Lyu1234ty"));
+            Register.userList.add(new User("정시우", UserType.Professor, "10239", "rlot1234", "Tue12034"));
+            Register.userList.add(new User("박시현", UserType.Student, "202508199", "riot1234", "Lke12093"));
+            Register.userList.add(new User("권유하", UserType.Professor, "10973", "quid1234", "Mnx0923"));
+
 
             Schedule.setLectureList(0, "자료구조", "월", "10");
             Schedule.setLectureList(1, "알고리즘", "월", "9");
