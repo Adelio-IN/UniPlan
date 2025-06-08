@@ -17,4 +17,9 @@ public class SystemRoster
     {
         return allowUser.containsKey(number) && allowUser.get(number).equals(name);
     }
+
+    public static boolean isEmpty()
+    {
+        return allowUser.isEmpty();
+    }
 }
