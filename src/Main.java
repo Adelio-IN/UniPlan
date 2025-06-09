@@ -1,5 +1,6 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class Main
@@ -74,9 +75,10 @@ public class Main
         System.out.println("-----UniPlan 메뉴-----");
         System.out.println("1. 시간표 관리");
         System.out.println("2. 알람 관리");
-        System.out.println("3. 이벤트/과제 관리");
+        System.out.println("3. 과제 관리");
         System.out.println("4. 이전 메뉴로");
-        System.out.println("5. exit");
+        System.out.println("5. 로그아웃");
+        System.out.println("6. exit");
 
         String choice = sc.nextLine();
         switch (choice)
@@ -88,7 +90,53 @@ public class Main
                 handleAlarmManagement();
                 break;
             case "3":
-                handleAlarmManagement();
+                handleEventAssignmentManagement();
+                break;
+            case "4":
+                return;
+            case "5":
+                System.out.println("로그아웃에 성공하셨습니다");
+                currentUser = null;
+                return;
+            case "6":
+                System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                Alarm.stopScheduler();
+                sc.close();
+                System.exit(0);
+            default:
+                System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+        }
+    }
+    private static void handleEventAssignmentManagement()
+    {
+        System.out.println("---과제 관리 메뉴---");
+        System.out.println("1. 과제 등록");
+        System.out.println("2. 과제 삭제");
+        System.out.println("3. 과제 목록 확인");
+        System.out.println("4. 이전 메뉴로");
+        System.out.println("5. exit");
+
+        String choice = sc.nextLine();
+        switch(choice)
+        {
+            case "1":
+                if (currentUser.getRole() == UserType.Professor)
+                {
+                    addEvent();
+                } else {
+                    System.out.println("⚠️ 권한이 없습니다. 교수만 과제/이벤트를 등록할 수 있습니다.");
+                }
+                break;
+            case "2":
+                if (currentUser.getRole() == UserType.Professor)
+                {
+                    removeEvent();
+                } else {
+                    System.out.println("⚠️ 권한이 없습니다. 교수만 과제/이벤트를 삭제할 수 있습니다.");
+                }
+                break;
+            case "3":
+                printAllEvents();
                 break;
             case "4":
                 return;
@@ -102,6 +150,108 @@ public class Main
         }
     }
 
+    private static void addEvent()
+    {
+        try
+        {
+            System.out.println("\n--- 과제/이벤트 등록 ---");
+            Schedule.printAllLectures();
+            if (Schedule.getLectureCount() == 0) {
+                System.out.println("⚠️ 먼저 강의를 등록해야 합니다.");
+                return;
+            }
+
+            System.out.print("이벤트를 등록할 강의의 인덱스를 입력하세요: ");
+            int lectureIndex = Integer.parseInt(sc.nextLine());
+
+            if (lectureIndex < 0 || lectureIndex >= 10 || Schedule.getLectureInfo(lectureIndex).contains("등록되지 않은 강의"))
+            {
+                System.out.println("⚠️ 잘못된 인덱스이거나 등록된 강의가 없습니다.");
+                return;
+            }
+
+            System.out.print("등록할 과제/이벤트 명을 입력하세요: ");
+            String eventName = sc.nextLine();
+
+            System.out.print("설명을 입력하세요: ");
+            String description = sc.nextLine();
+
+            System.out.print("마감 또는 이벤트 날짜와 시간을 입력하세요 (예: 2025-10-25 23:59): ");
+            String dateTimeStr = sc.nextLine();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime eventDateTime = LocalDateTime.parse(dateTimeStr, formatter);
+
+
+            EventSchedule newEvent = new EventSchedule(lectureIndex, eventName, eventDateTime, description);
+            EventSchedule.eventList.add(newEvent);
+
+            System.out.println("등록 완료!");
+
+        } catch (NumberFormatException e)
+        {
+            System.out.println("인덱스는 숫자로 입력해야 합니다.");
+        } catch
+        (DateTimeParseException e)
+        {
+            System.out.println("날짜 형식이 잘못되었습니다. 'yyyy-MM-dd HH:mm' 형식으로 입력해주세요.");
+        }
+    }
+    private static void removeEvent()
+    {
+        System.out.println("\n--- 과제/이벤트 삭제 ---");
+        printAllEvents();
+
+        if (EventSchedule.eventList.isEmpty())
+        {
+            return;
+        }
+
+        try
+        {
+            System.out.print("삭제할 항목의 번호를 입력하세요 (취소: 0): ");
+            int choice = Integer.parseInt(sc.nextLine());
+
+            if (choice == 0)
+            {
+                System.out.println("삭제를 취소했습니다.");
+                return;
+            }
+
+            int indexToDelete = choice - 1;
+
+            if (indexToDelete >= 0 && indexToDelete < EventSchedule.eventList.size())
+            {
+                EventSchedule removedEvent = EventSchedule.eventList.remove(indexToDelete);
+                System.out.println("다음 항목이 삭제되었습니다: " + removedEvent.getEventName());
+            }
+            else
+            {
+                System.out.println("목록에 있는 번호를 입력하세요");
+            }
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("숫자로 입력하세요");
+        }
+    }
+
+    private static void printAllEvents()
+    {
+        System.out.println("-- 전체 과제 목록 ---");
+        if (EventSchedule.eventList.isEmpty())
+        {
+            System.out.println("등록된 과제가 없습니다.");
+        }
+        else
+        {
+            for (int i = 0; i < EventSchedule.eventList.size(); i++)
+            {
+                System.out.println((i + 1) + ". " + EventSchedule.eventList.get(i).toString());
+            }
+        }
+        System.out.println("------------------------------");
+    }
     private static void handleEventManagement()
     {
         while (true)
@@ -157,6 +307,8 @@ public class Main
             System.out.print("강의 시간을 입력하세요");
             String time = sc.nextLine();
 
+            String professorId = (currentUser.getRole() == UserType.Professor) ? currentUser.getName() : "";
+            Schedule.setLectureList(index, name, day, time);
         }
         catch (NumberFormatException e)
         {
@@ -172,12 +324,13 @@ public class Main
             System.out.println("1. 알람 추가");
             System.out.println("2. 알람 삭제");
             System.out.println("3. 알람 리스트 확인");
-            System.out.println("4. exit");
+            System.out.println("4. 이전 메뉴로");
+            System.out.println("5. exit");
 
             String choice = sc.nextLine();
             if (choice.equalsIgnoreCase("exit"))
             {
-                choice =  "4";
+                choice =  "5";
             }
             switch (choice)
             {
@@ -205,6 +358,8 @@ public class Main
                     Alarm.printAllAlarms();
                     break;
                 case "4":
+                    return;
+                case "5":
                     System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
                     Alarm.stopScheduler();
                     sc.close();
@@ -234,12 +389,10 @@ public class Main
             return;
         }
 
-        System.out.print("알람 시간을 입력하세요(ex: 2025-05-10 10:00");
+        System.out.print("알람 시간을 입력하세요(ex: 2025-05-10 10:00)");
         String timeValueStr = sc.nextLine();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime setAlarm = LocalDateTime.parse(timeValueStr, formatter);
-
-        System.out.print("메시지를 입력하세요: ");
 
         System.out.print("메시지를 입력하세요.");
         String message = sc.nextLine();
