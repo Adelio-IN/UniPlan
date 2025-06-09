@@ -116,7 +116,14 @@ public class Main
             switch (choice)
             {
                 case "1":
-                    addLecture();
+                    if(currentUser.getRole() == UserType.Professor)
+                    {
+                        addLecture();
+                    }
+                    else
+                    {
+                        System.out.println("학생은 알람을 추가할 수 없습니다.");
+                    }
                     break;
                 case "2":
                     Schedule.printAllLectures();
