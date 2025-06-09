@@ -7,10 +7,10 @@ public class SystemRoster
 
     public static void loadDataRoaster()
     {
-        allowUser.put("202139079", "이인");
-        allowUser.put("202508199", "박시현");
-        allowUser.put("10239", "정시우");
-        allowUser.put("10973", "권유하");
+        allowUser.put("202410234", "이유림");
+        allowUser.put("202410094", "권공하");
+        allowUser.put("10324", "신시우");
+        allowUser.put("10825", "최단");
     }
 
     public static boolean isMember(String number, String name)

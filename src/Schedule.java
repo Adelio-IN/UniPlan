@@ -3,9 +3,9 @@ import java.util.List;
 import java.util.Timer;
 
 public class Schedule {
-    static final int maxLectureList = 10;
-
-    static String[][] lecture = new String[maxLectureList][3];
+    private static String professorId;
+    private static final int maxLectureList = 10;
+    static String[][] lecture = new String[maxLectureList][4];
 
     static
     {
@@ -30,6 +30,12 @@ public class Schedule {
         }
         printAllLectures();
     }
+    public Schedule(String professorId)
+    {
+        this.professorId = professorId;
+        this.lecture = new String[maxLectureList][4];
+        System.out.println("스케줄 관리자 생성");
+    }
 
     public static void setLectureList(int index, String name, String day, String time)
     {
@@ -37,6 +43,7 @@ public class Schedule {
             lecture[index][0] = name;
             lecture[index][1] = day;
             lecture[index][2] = time;
+            lecture[index][3] = professorId;
             System.out.println("일정 설정 완료.");
         } else {
             System.out.println("잘못된 인덱스입니다.");
@@ -82,7 +89,6 @@ public class Schedule {
         }
         LectureSort.sort_Day_Time(sortLectureList);
 
-        System.out.println("---강의 목록---");
         System.out.printf("%-25s | %-5s | %s%n", "강의명", "요일", "강의 시간");
         System.out.println("-------------------------------------");
         for (Sort lectureSort : sortLectureList)

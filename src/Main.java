@@ -2,7 +2,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
-public class Main {
+public class Main
+{
     private static User currentUser = null;
     private static final Login login = new Login();
     private static Scanner sc = new Scanner(System.in);
@@ -149,7 +150,6 @@ public class Main {
             System.out.print("강의 시간을 입력하세요");
             String time = sc.nextLine();
 
-            Schedule.setLectureList(index, name, day, time);
         }
         catch (NumberFormatException e)
         {
@@ -170,15 +170,29 @@ public class Main {
             String choice = sc.nextLine();
             if (choice.equalsIgnoreCase("exit"))
             {
-                choice =  "3";
+                choice =  "4";
             }
             switch (choice)
             {
                 case "1":
-                    addAlarm();
+                    if(currentUser.getRole() == UserType.Professor)
+                    {
+                        addAlarm();
+                    }
+                    else
+                    {
+                        System.out.println("학생은 알람을 추가할 수 없습니다.");
+                    }
                     break;
                 case "2":
-                    removeAlarm();
+                    if(currentUser.getRole() == UserType.Professor)
+                    {
+                        removeAlarm();
+                    }
+                    else
+                    {
+                        System.out.println("학생은 알람을 삭제할 수 없습니다.");
+                    }
                     break;
                 case "3":
                     Alarm.printAllAlarms();
@@ -192,6 +206,13 @@ public class Main {
                     System.out.println("잘못된 입력입니다. 다시 시도하세요.");
             }
         }
+    }
+    private static void myLectureView()
+    {
+        System.out.println(currentUser.getName() + " 님의 강의 목록");
+        boolean found = false;
+        String userId = currentUser.getId();
+
     }
 
     private static void addAlarm()

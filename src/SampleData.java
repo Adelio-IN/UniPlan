@@ -9,10 +9,10 @@ public class SampleData
 
             SystemRoster.loadDataRoaster();
 
-            Register.userList.add(new User("이인", UserType.Student, "202139079","rkdt1234", "Lyu1234ty"));
-            Register.userList.add(new User("정시우", UserType.Professor, "10239", "rlot1234", "Tue12034"));
-            Register.userList.add(new User("박시현", UserType.Student, "202508199", "riot1234", "Lke12093"));
-            Register.userList.add(new User("권유하", UserType.Professor, "10973", "quid1234", "Mnx0923"));
+            Register.userList.add(new Student("이인", "202139079","rkdt1234", "Lyu1234ty"));
+            Register.userList.add(new Professor("정시우", "10239", "rlot1234", "Tue12034"));
+            Register.userList.add(new Student("박시현","202508199", "riot1234", "Lke12093"));
+            Register.userList.add(new Professor("권유하","10973", "quid1234", "Mnx0923"));
 
 
             Schedule.setLectureList(0, "자료구조", "월", "10");

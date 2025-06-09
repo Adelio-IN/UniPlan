@@ -1,26 +1,21 @@
-enum UserType
-{
-    Student, Professor
-}
-public class User
+public abstract class User
 {
     private String name;
-    private String password;
-    private UserType role;
     private String id;
-    private String classNumber;
+    private String password;
+    private String studentId;
 
-    public User(String name, UserType role, String classNumber, String id, String password)
+    protected UserType role;
+
+    public User(String id, String name, String studentId, String password, UserType role)
     {
         this.name = name;
-        this.role = role;
-        this.classNumber = classNumber;
         this.id = id;
         this.password = password;
-
+        this.studentId = studentId;
+        this.role = role;
     }
 
-    // --- Getter 메소드들 ---
     public String getName()
     {
         return name;
@@ -37,8 +32,6 @@ public class User
     {
         return role;
     }
-    public String getClassNumber()
-    {
-        return classNumber;
-    }
+
+    public abstract void displayInfo();
 }

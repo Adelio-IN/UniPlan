@@ -5,7 +5,18 @@ import java.util.Scanner;
 public class Register
 {
     public static List<User> userList = new ArrayList<>();
+    private static String studentId;
+    private static UserType role;
+    private static UserType Student;
 
+    public void registerUser(User user)
+    {
+        if(user != null)
+        {
+            this.userList.add(user);
+            System.out.println(user.getName() + " has been registered");
+        }
+    }
     public static boolean isValidAlphaNumeric(String input)
     {
         if (input == null || input.isEmpty()) {
@@ -187,7 +198,7 @@ public class Register
 
         for (User user : userList)
         {
-            if (user.getClassNumber().equals(number))
+            if (user.getId().equals(number))
             {
                 System.out.println("이미 가입된 계정이 존재합니다.");
                 return;
@@ -200,9 +211,25 @@ public class Register
         String password = getPasswordInput(sc);
         String roleString = getValidRole(sc);
 
-        UserType userType = roleString.equals("교수") ? UserType.Professor : UserType.Student;
+        User newUser;
+        if(roleString.equals("학생"))
+        {
+            System.out.print("학번을 입력하세요");
+            String major = sc.nextLine().trim();
 
-        User newUser = new User(name, userType, number, id, password);
+            newUser = new Student(name, studentId, id, password);
+        }
+        else if (roleString.equals("교수")) {
+
+            System.out.print("학과를 입력하세요: ");
+            String department = sc.nextLine().trim();
+            newUser = new Professor(name, number, id, password);
+        }
+        else
+        {
+            System.out.println("⚠️ 잘못된 역할입니다. 가입을 중단합니다.");
+            return;
+        }
         userList.add(newUser);
 
         System.out.println("🎉 [" + name + " (" + id + ")]님의 계정 활성화(회원가입)가 완료되었습니다!");

@@ -45,11 +45,11 @@ public class Login
         String password = sc.nextLine().trim();
 
         for (User user : Register.userList) {
-            if (user.getRole() == targetType && user.getId().equals(id) && user.getPassword().equals(password)) {
+            if (user.getRole().equals(targetType) && user.getId().equals(id) && user.getPassword().equals(password)) {
                 return user;
             }
-            System.out.println("아이디 혹은 비밀번호가 일치하지 않습니다. 다시 시도하세요");
         }
+        System.out.println("아이디 혹은 비밀번호가 일치하지 않습니다. 다시 시도하세요");
         return null;
     }
 }
