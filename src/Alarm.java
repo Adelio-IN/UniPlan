@@ -1,19 +1,16 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
-public class Alarm {
-
+public class Alarm
+{
     static class AlarmData
     {
         private final int scheduleIndex;
         private final LocalDateTime alarmTime;
         private final String message;
         private boolean triggered = false;
-
         public AlarmData(int scheduleIndex, LocalDateTime alarmTime, String message)
         {
             this.scheduleIndex = scheduleIndex;
@@ -21,7 +18,6 @@ public class Alarm {
             this.message = message;
         }
 
-        // Getters and Setters
         public int getScheduleIndex()
         {
             return scheduleIndex;
@@ -98,23 +94,24 @@ public class Alarm {
     }
 
     public static void printAllAlarms() {
-        System.out.println("\n등록된 알람 목록 ---");
+        System.out.println("\n--- 등록된 알람 목록 ---");
         if (alarmList.isEmpty())
         {
             System.out.println("등록된 알람이 없습니다.");
+            return;
         }
-        else
+
+        AlarmSort.sortTime(alarmList);
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        for (int i = 0; i < alarmList.size(); i++)
         {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-            for (int i = 0; i < alarmList.size(); i++)
-            {
-                AlarmData alarm = alarmList.get(i);
-                String lectureInfo = Schedule.getLectureInfo(alarm.getScheduleIndex());
-                System.out.printf("%d. [강의: %s] %s | 시간: %s | 상태: %s\n",
-                        (i + 1), lectureInfo, alarm.getMessage(),
-                        alarm.getAlarmTime().format(formatter),
-                        alarm.isTriggered() ? "알람 울림" : "알람 울리기 전");
-            }
+            AlarmData alarm = alarmList.get(i);
+            String lectureInfo = Schedule.getLectureInfo(alarm.getScheduleIndex());
+            System.out.printf("%d. [강의: %s] %s | 시간: %s | 상태: %s\n",
+                    (i + 1), lectureInfo, alarm.getMessage(),
+                    alarm.getAlarmTime().format(formatter),
+                    alarm.isTriggered() ? "알람 울림" : "알람 울리기 전");
         }
         System.out.println("------------------------------");
     }
