@@ -17,7 +17,7 @@ public class LectureSort
             return Invalid_Time_Sort;
         }
     }
-    public static void sort_Day_Time(List<Sort> lecture)
+    public static void sortByDayAndTime(List<Sort> lecture)
     {
         lecture.sort(Comparator.comparingInt((Sort s) -> Day.indexOf(s.day)).thenComparingInt(s ->timeConversion(s.time)));
     }

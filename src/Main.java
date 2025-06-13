@@ -76,9 +76,8 @@ public class Main
         System.out.println("1. 시간표 관리");
         System.out.println("2. 알람 관리");
         System.out.println("3. 과제 관리");
-        System.out.println("4. 이전 메뉴로");
-        System.out.println("5. 로그아웃");
-        System.out.println("6. exit");
+        System.out.println("4. 로그아웃");
+        System.out.println("5. exit");
 
         String choice = sc.nextLine();
         switch (choice)
@@ -93,12 +92,10 @@ public class Main
                 handleEventAssignmentManagement();
                 break;
             case "4":
-                return;
-            case "5":
                 System.out.println("로그아웃에 성공하셨습니다");
                 currentUser = null;
                 return;
-            case "6":
+            case "5":
                 System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
                 Alarm.stopScheduler();
                 sc.close();

@@ -87,7 +87,7 @@ public class Schedule {
             System.out.println("-------------------------");
             return;
         }
-        LectureSort.sort_Day_Time(sortLectureList);
+        LectureSort.sortByDayAndTime(sortLectureList);
 
         System.out.printf("%-25s | %-5s | %s%n", "강의명", "요일", "강의 시간");
         System.out.println("-------------------------------------");
