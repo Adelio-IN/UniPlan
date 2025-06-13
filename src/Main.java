@@ -3,42 +3,34 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
-public class Main
-{
+public class Main {
     private static User currentUser = null;
     private static final Login login = new Login();
     private static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         SampleData.initialize();
         Alarm.startScheduler();
         System.out.println("UniPlan 로딩중...");
         System.out.println("\nUniPlan 로딩 완료!");
 
-        while (true)
-        {
-            if (currentUser == null)
-            {
+        while (true) {
+            if (currentUser == null) {
                 showLoginMenu();
-            }
-            else
-            {
+            } else {
                 showSelectMenu();
             }
         }
     }
 
-    private static void showLoginMenu()
-    {
+    private static void showLoginMenu() {
         System.out.println("\n-----UniPlan Main-----");
         System.out.println("1. 로그인");
         System.out.println("2. 회원가입");
         System.out.println("3. exit");
 
         String choice = sc.nextLine();
-        switch (choice)
-        {
+        switch (choice) {
             case "1":
                 handleLogin();
                 break;
@@ -55,23 +47,18 @@ public class Main
         }
     }
 
-    private static void handleLogin()
-    {
+    private static void handleLogin() {
         User user = login.tryLogin(sc);
 
-        if (user != null)
-        {
+        if (user != null) {
             System.out.println(user.getName() + " 님 로그인에 성공하셨습니다");
             currentUser = user;
-        }
-        else
-        {
+        } else {
             System.out.println("로그인에 실패하였습니다.");
         }
     }
 
-    private static void showSelectMenu()
-    {
+    private static void showSelectMenu() {
         System.out.println("-----UniPlan 메뉴-----");
         System.out.println("1. 시간표 관리");
         System.out.println("2. 알람 관리");
@@ -80,8 +67,7 @@ public class Main
         System.out.println("5. exit");
 
         String choice = sc.nextLine();
-        switch (choice)
-        {
+        switch (choice) {
             case "1":
                 handleEventManagement();
                 break;
@@ -104,8 +90,8 @@ public class Main
                 System.out.println("잘못된 입력입니다. 다시 시도하세요.");
         }
     }
-    private static void handleEventAssignmentManagement()
-    {
+
+    private static void handleEventAssignmentManagement() {
         System.out.println("---과제 관리 메뉴---");
         System.out.println("1. 과제 등록");
         System.out.println("2. 과제 삭제");
@@ -114,19 +100,16 @@ public class Main
         System.out.println("5. exit");
 
         String choice = sc.nextLine();
-        switch(choice)
-        {
+        switch (choice) {
             case "1":
-                if (currentUser.getRole() == UserType.Professor)
-                {
+                if (currentUser.getRole() == UserType.Professor) {
                     addEvent();
                 } else {
                     System.out.println("⚠️ 권한이 없습니다. 교수만 과제/이벤트를 등록할 수 있습니다.");
                 }
                 break;
             case "2":
-                if (currentUser.getRole() == UserType.Professor)
-                {
+                if (currentUser.getRole() == UserType.Professor) {
                     removeEvent();
                 } else {
                     System.out.println("⚠️ 권한이 없습니다. 교수만 과제/이벤트를 삭제할 수 있습니다.");
@@ -147,10 +130,8 @@ public class Main
         }
     }
 
-    private static void addEvent()
-    {
-        try
-        {
+    private static void addEvent() {
+        try {
             System.out.println("\n--- 과제/이벤트 등록 ---");
             Schedule.printAllLectures();
             if (Schedule.getLectureCount() == 0) {
@@ -161,8 +142,7 @@ public class Main
             System.out.print("이벤트를 등록할 강의의 인덱스를 입력하세요: ");
             int lectureIndex = Integer.parseInt(sc.nextLine());
 
-            if (lectureIndex < 0 || lectureIndex >= 10 || Schedule.getLectureInfo(lectureIndex).contains("등록되지 않은 강의"))
-            {
+            if (lectureIndex < 0 || lectureIndex >= 10 || Schedule.getLectureInfo(lectureIndex).contains("등록되지 않은 강의")) {
                 System.out.println("⚠️ 잘못된 인덱스이거나 등록된 강의가 없습니다.");
                 return;
             }
@@ -185,74 +165,59 @@ public class Main
 
             System.out.println("등록 완료!");
 
-        } catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("인덱스는 숫자로 입력해야 합니다.");
         } catch
-        (DateTimeParseException e)
-        {
+        (DateTimeParseException e) {
             System.out.println("날짜 형식이 잘못되었습니다. 'yyyy-MM-dd HH:mm' 형식으로 입력해주세요.");
         }
     }
-    private static void removeEvent()
-    {
+
+    private static void removeEvent() {
         System.out.println("\n--- 과제/이벤트 삭제 ---");
         printAllEvents();
 
-        if (EventSchedule.eventList.isEmpty())
-        {
+        if (EventSchedule.eventList.isEmpty()) {
             return;
         }
 
-        try
-        {
+        try {
             System.out.print("삭제할 항목의 번호를 입력하세요 (취소: 0): ");
             int choice = Integer.parseInt(sc.nextLine());
 
-            if (choice == 0)
-            {
+            if (choice == 0) {
                 System.out.println("삭제를 취소했습니다.");
                 return;
             }
 
             int indexToDelete = choice - 1;
 
-            if (indexToDelete >= 0 && indexToDelete < EventSchedule.eventList.size())
-            {
+            if (indexToDelete >= 0 && indexToDelete < EventSchedule.eventList.size()) {
                 EventSchedule removedEvent = EventSchedule.eventList.remove(indexToDelete);
                 System.out.println("다음 항목이 삭제되었습니다: " + removedEvent.getEventName());
-            }
-            else
-            {
+            } else {
                 System.out.println("목록에 있는 번호를 입력하세요");
             }
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("숫자로 입력하세요");
         }
     }
 
-    private static void printAllEvents()
-    {
+    private static void printAllEvents() {
         System.out.println("-- 전체 과제 목록 ---");
-        if (EventSchedule.eventList.isEmpty())
-        {
+        if (EventSchedule.eventList.isEmpty()) {
             System.out.println("등록된 과제가 없습니다.");
-        }
-        else
-        {
-            for (int i = 0; i < EventSchedule.eventList.size(); i++)
-            {
+        } else {
+            for (int i = 0; i < EventSchedule.eventList.size(); i++) {
                 System.out.println((i + 1) + ". " + EventSchedule.eventList.get(i).toString());
             }
         }
         System.out.println("------------------------------");
     }
+
     private static void handleEventManagement() {
         while (true) {
-            if (currentUser.getRole() == UserType.Professor)
-            {
+            if (currentUser.getRole() == UserType.Professor) {
                 while (true) {
                     System.out.println("\n--시간표 관리 (교수)--");
                     System.out.println("1. 강의 추가");
@@ -261,8 +226,7 @@ public class Main
                     System.out.println("4. exit");
                     String choice = sc.nextLine();
 
-                    switch (choice)
-                    {
+                    switch (choice) {
                         case "1":
                             addLecture();
                             break;
@@ -280,11 +244,8 @@ public class Main
                             System.out.println("잘못된 입력입니다. 다시 시도하세요.");
                     }
                 }
-            }
-            else
-            {
-                while (true)
-                {
+            } else {
+                while (true) {
                     System.out.println("\n--시간표 관리 (학생)--");
                     System.out.println("1. 내 시간표에 강의 추가");
                     System.out.println("2. 내 시간표 확인");
@@ -293,8 +254,7 @@ public class Main
                     System.out.println("5. exit");
                     String choice = sc.nextLine();
 
-                    switch (choice)
-                    {
+                    switch (choice) {
                         case "1":
                             addLectureMyTimetable();
                             break;
@@ -318,44 +278,35 @@ public class Main
             }
         }
     }
-    
-    private static void addLectureMyTimetable()
-    {
+
+    private static void addLectureMyTimetable() {
         Schedule.printAllLectures();
-        if (Schedule.getLectureCount() == 0)
-        {
+        if (Schedule.getLectureCount() == 0) {
             return;
         }
         System.out.print("\n내 시간표에 추가할 강의의 인덱스를 입력하세요 (취소: exit): ");
-        try
-        {
+        try {
             String input = sc.nextLine();
-            if (input.equalsIgnoreCase("exit"))
-            {
+            if (input.equalsIgnoreCase("exit")) {
                 System.out.println("추가를 취소했습니다.");
                 return;
             }
 
             int lectureIndex = Integer.parseInt(input);
 
-            if (lectureIndex < 0 || lectureIndex >= 10 || Schedule.lecture[lectureIndex][0].isEmpty())
-            {
+            if (lectureIndex < 0 || lectureIndex >= 10 || Schedule.lecture[lectureIndex][0].isEmpty()) {
                 System.out.println("⚠️ 잘못된 인덱스이거나 등록된 강의가 없는 인덱스입니다.");
                 return;
             }
             Student student = (Student) currentUser;
             student.addLectureToTimetable(lectureIndex);
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("⚠️ 인덱스는 숫자로 입력해야 합니다.");
         }
     }
 
-    private static void addLecture()
-    {
-        try
-        {
+    private static void addLecture() {
+        try {
             System.out.println("인덱스를 입력하세요");
             int index = Integer.parseInt(sc.nextLine());
 
@@ -370,17 +321,13 @@ public class Main
 
             String professorId = (currentUser.getRole() == UserType.Professor) ? currentUser.getName() : "";
             Schedule.setLectureList(index, name, day, time);
-        }
-        catch (NumberFormatException e)
-        {
+        } catch (NumberFormatException e) {
             System.out.println("인덱스와 강의 시간은 숫자로만 입력가능합니다.");
         }
     }
 
-    private static void handleAlarmManagement()
-    {
-        while(true)
-        {
+    private static void handleAlarmManagement() {
+        while (true) {
             System.out.println("-----알람 관리 -----");
             System.out.println("1. 알람 추가");
             System.out.println("2. 알람 삭제");
@@ -389,16 +336,15 @@ public class Main
             System.out.println("5. exit");
 
             String choice = sc.nextLine();
-            if (choice.equalsIgnoreCase("exit"))
-            {
-                choice =  "5";
+            if (choice.equalsIgnoreCase("exit")) {
+                choice = "5";
             }
-            switch (choice)
-            {
+            switch (choice) {
                 case "1":
                     addAlarm();
                     break;
                 case "2":
+                    removeAlarm();
                     break;
                 case "3":
                     Alarm.printAllAlarms();
@@ -415,35 +361,52 @@ public class Main
             }
         }
     }
-    private static void myLectureView()
-    {
+
+    private static void myLectureView() {
         System.out.println(currentUser.getName() + " 님의 강의 목록");
         boolean found = false;
         String userId = currentUser.getId();
 
     }
 
-    private static void addAlarm()
-    {
-        Schedule.printAllLectures();
-        System.out.println("알람을 설정할 강의의 인덱스를 입력하세요.");
-        int index = Integer.parseInt(sc.nextLine());
+    private static void addAlarm() {
+        try {
+            if (Schedule.getLectureCount() == 0) {
+                return;
+            }
 
-        if(Schedule.lecture[index][0] == null || Schedule.lecture[index][0].isEmpty())
-        {
-            System.out.println("해당 인덱스에 등록된 강의가 존재하지 않습니다.");
-            return;
+            Schedule.printAllLectures();
+            System.out.println("알람을 설정할 강의의 인덱스를 입력하세요.");
+            int index = Integer.parseInt(sc.nextLine());
+
+            if (Schedule.lecture[index][0] == null || Schedule.lecture[index][0].isEmpty()) {
+                System.out.println("해당 인덱스에 등록된 강의가 존재하지 않습니다.");
+                return;
+            }
+
+            System.out.print("알람 시간을 입력하세요(ex: 2025-05-10 10:00)");
+            String timeValueStr = sc.nextLine();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+            LocalDateTime setAlarm = LocalDateTime.parse(timeValueStr, formatter);
+
+            if (setAlarm.isBefore(SystemClock.now())) {
+                System.out.println("⚠️ 알람은 현재 시간보다 이전으로 설정할 수 없습니다.");
+                System.out.println("현재 시간: " + SystemClock.getFormattedTime());
+                return;
+            }
+            System.out.print("메시지를 입력하세요.");
+            String message = sc.nextLine();
+
+            Alarm.addAlarm(index, setAlarm, message);
         }
-
-        System.out.print("알람 시간을 입력하세요(ex: 2025-05-10 10:00)");
-        String timeValueStr = sc.nextLine();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime setAlarm = LocalDateTime.parse(timeValueStr, formatter);
-
-        System.out.print("메시지를 입력하세요.");
-        String message = sc.nextLine();
-
-        Alarm.addAlarm(index, setAlarm, message);
+        catch (NumberFormatException e)
+        {
+            System.out.println("⚠️ 오류: 인덱스는 숫자로 입력해야 합니다.");
+        }
+        catch (DateTimeParseException e)
+        {
+            System.out.println("⚠️ 오류: 날짜 형식이 잘못되었습니다. 'yyyy-MM-dd HH:mm' 형식으로 입력해주세요.");
+        }
     }
 
     private static void removeAlarm()
