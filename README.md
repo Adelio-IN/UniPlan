@@ -42,7 +42,7 @@
 - 알림: 알람 시스템은 백그라운드에서 실행되며, 현재 시간을 예약된 이벤트와 비교하여 확인한다. 테스트를 위해 시스템 시간은 수동으로 설정할 수 있다. 시간이 되면 알람이 트리거되어 콘솔에 표시된다.
 
 ### Flow Chart
-![](https://github.com/user-attachments/assets/783679c9-b877-4985-9cee-152941656f34")
+![]<img width="11044" alt="Image" src="https://github.com/user-attachments/assets/2b0da6d3-fee0-4410-b9b4-9f2affd081c5" />
 
 ### ⚓ 프로그램의 이점
 - 대상 사용자: 이 시스템은 청주대학교 학생 및 교직원을 대상으로 한다.
