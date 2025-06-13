@@ -249,42 +249,106 @@ public class Main
         }
         System.out.println("------------------------------");
     }
-    private static void handleEventManagement()
-    {
-        while (true)
-        {
-            System.out.println("--시간표 메뉴--");
-            System.out.println("1. 강의 추가");
-            System.out.println("2. 강의 목록 확인");
-            System.out.println("3. 이전 메뉴로");
-            System.out.println("4. exit");
-            String choice = sc.nextLine();
-
-            switch (choice)
+    private static void handleEventManagement() {
+        while (true) {
+            if (currentUser.getRole() == UserType.Professor)
             {
-                case "1":
-                    if(currentUser.getRole() == UserType.Professor)
+                while (true) {
+                    System.out.println("\n--시간표 관리 (교수)--");
+                    System.out.println("1. 강의 추가");
+                    System.out.println("2. 전체 강의 목록 확인");
+                    System.out.println("3. 이전 메뉴로");
+                    System.out.println("4. exit");
+                    String choice = sc.nextLine();
+
+                    switch (choice)
                     {
-                        addLecture();
+                        case "1":
+                            addLecture();
+                            break;
+                        case "2":
+                            Schedule.printAllLectures();
+                            break;
+                        case "3":
+                            return;
+                        case "4":
+                            System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                            Alarm.stopScheduler();
+                            sc.close();
+                            System.exit(0);
+                        default:
+                            System.out.println("잘못된 입력입니다. 다시 시도하세요.");
                     }
-                    else
-                    {
-                        System.out.println("학생은 알람을 추가할 수 없습니다.");
-                    }
-                    break;
-                case "2":
-                    Schedule.printAllLectures();
-                    break;
-                case "3":
-                    return;
-                case "4":
-                    System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
-                    Alarm.stopScheduler();
-                    sc.close();
-                    System.exit(0);
-                default:
-                    System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+                }
             }
+            else
+            {
+                while (true)
+                {
+                    System.out.println("\n--시간표 관리 (학생)--");
+                    System.out.println("1. 내 시간표에 강의 추가");
+                    System.out.println("2. 내 시간표 확인");
+                    System.out.println("3. 전체 강의 목록 확인");
+                    System.out.println("4. 이전 메뉴로");
+                    System.out.println("5. exit");
+                    String choice = sc.nextLine();
+
+                    switch (choice)
+                    {
+                        case "1":
+                            addLectureMyTimetable();
+                            break;
+                        case "2":
+                            ((Student) currentUser).printMyTimetable();
+                            break;
+                        case "3":
+                            Schedule.printAllLectures();
+                            break;
+                        case "4":
+                            return;
+                        case "5":
+                            System.out.println("사용자의 exit 입력으로 프로그램이 종료됩니다.");
+                            Alarm.stopScheduler();
+                            sc.close();
+                            System.exit(0);
+                        default:
+                            System.out.println("잘못된 입력입니다. 다시 시도하세요.");
+                    }
+                }
+            }
+        }
+    }
+    
+    private static void addLectureMyTimetable()
+    {
+        Schedule.printAllLectures();
+        if (Schedule.getLectureCount() == 0)
+        {
+            return;
+        }
+        System.out.print("\n내 시간표에 추가할 강의의 인덱스를 입력하세요 (취소: exit): ");
+        try
+        {
+            String input = sc.nextLine();
+            if (input.equalsIgnoreCase("exit"))
+            {
+                System.out.println("추가를 취소했습니다.");
+                return;
+            }
+
+            int lectureIndex = Integer.parseInt(input);
+
+            if (lectureIndex < 0 || lectureIndex >= 10 || Schedule.lecture[lectureIndex][0].isEmpty())
+            {
+                System.out.println("⚠️ 잘못된 인덱스이거나 등록된 강의가 없는 인덱스입니다.");
+                return;
+            }
+            Student student = (Student) currentUser;
+            student.addLectureToTimetable(lectureIndex);
+        }
+        catch (NumberFormatException e)
+        {
+            System.out.println("⚠️ 인덱스는 숫자로 입력해야 합니다.");
         }
     }
 
@@ -332,24 +396,9 @@ public class Main
             switch (choice)
             {
                 case "1":
-                    if(currentUser.getRole() == UserType.Professor)
-                    {
-                        addAlarm();
-                    }
-                    else
-                    {
-                        System.out.println("학생은 알람을 추가할 수 없습니다.");
-                    }
+                    addAlarm();
                     break;
                 case "2":
-                    if(currentUser.getRole() == UserType.Professor)
-                    {
-                        removeAlarm();
-                    }
-                    else
-                    {
-                        System.out.println("학생은 알람을 삭제할 수 없습니다.");
-                    }
                     break;
                 case "3":
                     Alarm.printAllAlarms();

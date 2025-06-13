@@ -15,13 +15,13 @@ public class Professor extends User {
         System.out.println("연구실: " + this.labLocation);
         System.out.println("-----------------");
     }
-
-    // 연구실 위치 설정/조회 메서드 추가 (선택)
-    public void setLabLocation(String labLocation) {
+    public void setLabLocation(String labLocation)
+    {
         this.labLocation = labLocation;
     }
 
-    public String getLabLocation() {
+    public String getLabLocation()
+    {
         return labLocation;
     }
 }

@@ -2,7 +2,8 @@ import java.time.LocalDateTime;
 
 public class SampleData
 {
-    public static void initialize() {
+    public static void initialize()
+    {
         if (Register.userList.isEmpty() && SystemRoster.isEmpty())
         {
             System.out.println("---Generating Sample Data---");
@@ -15,8 +16,8 @@ public class SampleData
             Register.userList.add(new Professor("권유하","10973", "quid1234", "Mnx0923"));
 
 
-            Schedule.setLectureList(0, "자료구조", "월", "10");
-            Schedule.setLectureList(1, "알고리즘", "월", "9");
+            Schedule.setLectureList(1, "자료구조", "월", "10");
+            Schedule.setLectureList(0, "알고리즘", "월", "9");
             Schedule.setLectureList(2, "운영체제", "화", "15");
             Schedule.setLectureList(3, "데이터베이스", "목", "13");
             Schedule.setLectureList(4, "컴퓨터네트워크", "금", "16");

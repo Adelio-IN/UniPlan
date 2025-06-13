@@ -39,24 +39,30 @@ public class Schedule {
 
     public static void setLectureList(int index, String name, String day, String time)
     {
-        if (index >= 0 && index < maxLectureList) {
+        if (index >= 0 && index < maxLectureList)
+        {
             lecture[index][0] = name;
             lecture[index][1] = day;
             lecture[index][2] = time;
             lecture[index][3] = professorId;
             System.out.println("일정 설정 완료.");
-        } else {
+        }
+        else
+        {
             System.out.println("잘못된 인덱스입니다.");
         }
     }
 
-    public static String getLectureInfo(int index) {
-        if (index >= 0) {
+    public static String getLectureInfo(int index)
+    {
+        if (index >= 0)
+        {
             return String.format("%s (%s %s)", lecture[index][0], lecture[index][1], lecture[index][2]);
         }
         return "등록되지 않은 강의입니다";
     }
-    public static int getLectureCount() {
+    public static int getLectureCount()
+    {
         int count = 0;
         for (int i = 0; i < maxLectureList; i++)
         {
@@ -68,7 +74,8 @@ public class Schedule {
         return count;
     }
 
-    public static void printAllLectures() {
+    public static void printAllLectures()
+    {
         System.out.println("-----전체 강의 목록-----");
         List<Sort> sortLectureList = new ArrayList<>();
         for (int i = 0; i < maxLectureList; i++)
@@ -77,7 +84,7 @@ public class Schedule {
 
             if (name != null && !name.isEmpty())
             {
-                sortLectureList.add(new Sort(name, lecture[i][1], lecture[i][2]));
+                sortLectureList.add(new Sort(i, name, lecture[i][1], lecture[i][2]));
             }
         }
         if (sortLectureList.isEmpty())
@@ -89,13 +96,14 @@ public class Schedule {
         }
         LectureSort.sortByDayAndTime(sortLectureList);
 
-        System.out.printf("%-25s | %-5s | %s%n", "강의명", "요일", "강의 시간");
-        System.out.println("-------------------------------------");
+        System.out.printf("%-5s | %-25s | %-5s | %s%n", "인덱스", "강의명", "요일", "강의 시간");
+        System.out.println("---------------------------------------------");
+
         for (Sort lectureSort : sortLectureList)
         {
-            System.out.printf("%-25s | %-4s | %s%n", lectureSort.name, lectureSort.day, lectureSort.time);
+            System.out.printf("%-5d | %-25s | %-4s | %s%n", lectureSort.index, lectureSort.name, lectureSort.day, lectureSort.time);
         }
-        System.out.println("-------------------------------------");
+        System.out.println("---------------------------------------------");
         System.out.println(getLectureCount() + "개의 강의가 등록되어 있습니다.");
     }
 }
