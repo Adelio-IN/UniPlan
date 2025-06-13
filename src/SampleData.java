@@ -7,7 +7,7 @@ public class SampleData
         {
             System.out.println("---Generating Sample Data---");
 
-            SystemRoster.loadDataRoaster();
+            SystemRoster.loadDataRoster();
 
             Register.userList.add(new Student("이인", "202139079","rkdt1234", "Lyu1234ty"));
             Register.userList.add(new Professor("정시우", "10239", "rlot1234", "Tue12034"));

@@ -5,7 +5,7 @@ public class SystemRoster
 {
     private static final Map<String, String> allowUser = new HashMap<>();
 
-    public static void loadDataRoaster()
+    public static void loadDataRoster()
     {
         allowUser.put("202410234", "이유림");
         allowUser.put("202410094", "권공하");
