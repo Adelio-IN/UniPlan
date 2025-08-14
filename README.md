@@ -1,4 +1,4 @@
-# Javaprogramming1_project
+#	UniPlan
 
 이 문서는 Java 프로그래밍 프로젝트로 개발된 대학 강의 및 과제 관리 시스템에 대한 설명이다.
 ### 🔌 프로그램 설명
